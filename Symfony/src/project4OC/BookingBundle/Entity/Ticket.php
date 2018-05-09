@@ -10,17 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="ticket")
  * @ORM\Entity(repositoryClass="project4OC\BookingBundle\Repository\TicketRepository")
  */
-class Ticket
+class Ticket extends Entity
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var string
      *
@@ -60,16 +51,7 @@ class Ticket
     {
         $this->reducedRate = false;
     }
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    
 
     /**
      * Set name

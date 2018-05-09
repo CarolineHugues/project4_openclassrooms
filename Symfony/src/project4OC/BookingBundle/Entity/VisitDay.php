@@ -10,17 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="visit_day")
  * @ORM\Entity(repositoryClass="project4OC\BookingBundle\Repository\VisitDayRepository")
  */
-class VisitDay
+class VisitDay extends Entity
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var \DateTime
      *
@@ -39,16 +30,7 @@ class VisitDay
     {
         $this->gauge = 0;
     }
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    
 
     /**
      * Set date

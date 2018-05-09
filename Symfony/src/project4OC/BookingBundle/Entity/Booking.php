@@ -10,16 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="booking")
  * @ORM\Entity(repositoryClass="project4OC\BookingBundle\Repository\BookingRepository")
  */
-class Booking
+class Booking extends Entity
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var \DateTime
@@ -49,16 +41,6 @@ class Booking
      */
     private $bookingCode;
 
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set date
