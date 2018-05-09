@@ -12,7 +12,7 @@ class VisitDayManagerTest extends TestCase
 	{
 		/*...*/
 		
-		$this->assertSame(85, $visitDay->fillGauge(/*...*/)));
+		$this->assertSame(85, $visitDay->fillGauge(/*...*/));
 	}
 
 	public function testDayAvailableUntil1000Tickets()

@@ -9,7 +9,7 @@ class TicketManager
 		$birthD = explode('/', $birthDate);
 		$todaysDate = explode('/', date('d/m/Y'));
 
-		if($birthD[1] < $todaysDate[1]) OR (($birthD[1] == $todaysDate[1]) AND $birthD[0] <= $todaysDate[0])))
+		if(($birthD[1] < $todaysDate[1]) OR (($birthD[1] == $todaysDate[1]) AND ($birthD[0] <= $todaysDate[0])))
 		{
 			$age = $todaysDate[2] - $birthD[2];
 		}
