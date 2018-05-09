@@ -1,0 +1,4 @@
+services:
+#    project4_oc_booking.example:
+#        class: project4OC\BookingBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
