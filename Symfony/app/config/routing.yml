@@ -1,7 +1,3 @@
 project4_oc_booking:
     resource: "@project4OCBookingBundle/Resources/config/routing.yml"
     prefix:   /
-
-oc_platform2:
-    resource: "@OCPlatform2Bundle/Resources/config/routing.yml"
-    prefix:   /platform
