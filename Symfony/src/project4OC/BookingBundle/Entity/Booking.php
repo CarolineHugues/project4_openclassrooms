@@ -12,13 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Booking extends Entity
 {
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="datetime")
-     */
-    private $date;
+	/**
+	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\VisitDay")
+	 */
+	private $visitDay;
 
     /**
      * @var string
@@ -42,28 +39,16 @@ class Booking extends Entity
     private $bookingCode;
 
 
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Booking
-     */
-    public function setDate($date)
+    public function setVisitDay (VisitDay $visitDay)
     {
-        $this->date = $date;
+    	$this->visitDay = $visitDay;
 
-        return $this;
+    	return $this;
     }
 
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
+    public function getVisitDay()
     {
-        return $this->date;
+    	return $this->visitDay;
     }
 
     /**

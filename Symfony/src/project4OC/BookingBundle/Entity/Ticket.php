@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ticket extends Entity
 {
+	/**
+	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\Booking")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $booking;
+
     /**
      * @var string
      *
@@ -52,6 +58,18 @@ class Ticket extends Entity
         $this->reducedRate = false;
     }
     
+
+    public function setBooking (Booking $booking)
+    {
+    	$this->booking = $booking;
+
+    	return $this;
+    }
+
+    public function getBooking()
+    {
+    	return $this->booking;
+    }
 
     /**
      * Set name
