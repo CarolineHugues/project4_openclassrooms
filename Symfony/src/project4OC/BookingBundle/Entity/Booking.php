@@ -13,12 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Booking extends Entity
 {
 	/**
-	 * @ORM\OneToMany(targetEntity="project4OC\BookingBundle\Entity\Ticket")
+	 * @ORM\OneToMany(targetEntity="project4OC\BookingBundle\Entity\Ticket", mappedBy="booking")
 	 */
 	private $tickets;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\VisitDay", inversedBy="bookings")
+	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\VisitDay")
 	 */
 	private $visitDay;
 
