@@ -13,7 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Booking extends Entity
 {
 	/**
-	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\VisitDay")
+	 * @ORM\OneToMany(targetEntity="project4OC\BookingBundle\Entity\Ticket")
+	 */
+	private $tickets;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\VisitDay", inversedBy="bookings")
 	 */
 	private $visitDay;
 
@@ -38,6 +43,30 @@ class Booking extends Entity
      */
     private $bookingCode;
 
+
+    public function __construct()
+    {
+    	$this->tickets = new ArrayCollection();
+    }
+
+    public function addTicket(Ticket $ticket)
+    {
+    	$this->tickets[] = $ticket;
+
+    	$ticket->setBooking($this);
+
+    	return $this;
+    }
+
+    public function removeTicket(Ticket $ticket)
+    {
+    	$this->tickets->removeElement($ticket);
+    }
+
+    public function getTickets()
+    {
+    	return $this->tickets;
+    }
 
     public function setVisitDay (VisitDay $visitDay)
     {

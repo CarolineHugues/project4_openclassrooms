@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Ticket extends Entity
 {
 	/**
-	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\Booking")
+	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\Booking", inversedBy="tickets")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $booking;
