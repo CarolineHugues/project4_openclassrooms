@@ -9,31 +9,57 @@ use PHPUnit\Framework\TestCase;
 
 class BookingManagerTest extends TestCase
 {
+	public function testComputeNumberOfTickets()
+	{
+		$ticket1 = new Ticket();
+		$ticket2 = new Ticket();
+		$ticket3 = new Ticket();
+		$ticket4 = new Ticket();
+		$booking1 = new Booking();
+		$booking1->addTicket($ticket1);
+		$booking1->addTicket($ticket2); 
+		$booking1->addTicket($ticket3);
+		$booking1->addTicket($ticket4);
+
+		$bookingManager = new BookingManager();
+
+		$this->assertSame(4, $bookingManager->computeNumberOfTickets($booking1));
+	}
+
 	public function testEachTicketHisRate()
 	{
-		$ticket1 = new Ticket('Julie', 'Henri', '5/08/2010', 'France', false);
-		$ticket2 = new Ticket('Hugo', 'Marc', '3/01/1935', 'Italie', false);
+		$ticket1 = new Ticket();
+		$ticket1->setBirthDate('5/08/2010');
+		$ticket2 = new Ticket();
+		$ticket2->setBirthDate('3/01/1935');
 
-		$booking = new Booking ('5/09/2019', 'day', 'contact@project.fr', '0200203LP');
+		$booking1 = new Booking ();
+		$booking1->addTicket($ticket1);
+		$booking1->addTicket($ticket2);
 
-        $this->assertSame(20, $booking->computeTotalPrice());
+		$bookingManager = new BookingManager();
+
+        $this->assertSame(20, $bookingManager->computeTotalPrice($booking1));
 	}
 
 	public function testHalfdayRate()
 	{
-		$ticket2 = new Ticket('Hugo', 'Marc', '3/01/1935', 'Italie', false);
+		$ticket1 = new Ticket();
+		$ticket1->setBirthDate('3/01/1935');
 
-		$booking = new Booking ('12/11/2019', 'half-day', 'contact@project2.fr', '050308MM');
+		$booking1 = new Booking ();
+		$booking1->addTicket($ticket1);
+		$booking1->setTicketType('half-day');
 
-        $this->assertSame(12, $booking->computeTotalPrice());
+		$bookingManager = new BookingManager();
+
+        $this->assertSame(12, $bookingManager->computeTotalPrice($booking1));
 	}
 
 	public function testDisplayGroupRateMessage()
 	{
-		/*16 tickets achetés à la fois*/
+		$bookingManager = new BookingManager();
 
-		$booking = new Booking ('02/02/2020', 'day', 'contact@project3.fr', '09080706NN');
-
-		$this->assertSame("Veuillez contacter l'équipe du musée pour réserver et avoir des renseignements à propos de notre tarif groupe.", $booking->computeNumberOfTickets());
+		$this->assertSame("Veuillez contacter l'équipe du musée pour réserver et avoir des renseignements à propos de notre tarif groupe.", $bookingManager->individualOrGroupRate(16));
 	}
 }

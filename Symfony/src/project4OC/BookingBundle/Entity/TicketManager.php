@@ -31,7 +31,11 @@ class TicketManager
 		}
 		else
 		{
-			if ($computedAge >= 12)
+			if($computedAge >= 60)
+			{
+				$price = 12;
+			}
+			else if($computedAge >= 12)
 			{
 				$price = 16;
 			}
@@ -42,10 +46,6 @@ class TicketManager
 			else if($computedAge > 0 AND $computedAge < 4)
 			{
 				$price = 0;
-			}
-			else if($computedAge >= 60)
-			{
-				$price = 12;
 			}
 			else if($computedAge <= 0)
 			{
