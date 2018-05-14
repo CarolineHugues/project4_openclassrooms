@@ -1,3 +1,3 @@
 project4_oc_booking_homepage:
     path:     /
-    defaults: { _controller: project4OCBookingBundle:Default:index }
+    defaults: { _controller: project4OCBookingBundle:Frontend:index }
