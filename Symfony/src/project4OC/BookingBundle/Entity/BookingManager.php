@@ -25,7 +25,7 @@ class BookingManager
 		}
 		else
 		{
-			return $message = "Veuillez contacter l'équipe du musée pour réserver et avoir des renseignements à propos de notre tarif groupe.";
+			return $message "Veuillez contacter l'équipe du musée pour réserver et avoir des renseignements à propos de notre tarif groupe.";
 		}
 	}
 

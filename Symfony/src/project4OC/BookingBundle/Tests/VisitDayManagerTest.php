@@ -23,7 +23,7 @@ class VisitDayManagerTest extends TestCase
 		$numberReservedTickets = $bookingManager->computeNumberOfTickets($booking1);
 
 		$visitDayManager = new visitDayManager(); 
-
+		
 		$visitDay1 = new VisitDay();
 		$visitDay1->setDate('5/07/2019');
 		$visitDay1->setGauge(400);
@@ -46,7 +46,7 @@ class VisitDayManagerTest extends TestCase
 	{
 		$visitDayManager = new visitDayManager();
 
-		$visitDay1 = new VisitDay();
+        $visitDay1 = new VisitDay();
 		$visitDay1->setDate('5/09/2019');
 		$visitDay1->setGauge(1000);
 
