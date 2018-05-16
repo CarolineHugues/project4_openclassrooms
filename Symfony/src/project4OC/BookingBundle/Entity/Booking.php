@@ -38,6 +38,13 @@ class Booking extends Entity
     private $mail;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="numberOfTickets", type="integer")
+     */
+    private $numberOfTickets;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="bookingCode", type="string", length=255, unique=true)
@@ -127,6 +134,30 @@ class Booking extends Entity
     public function getMail()
     {
         return $this->mail;
+    }
+
+    /**
+     * Set mail
+     *
+     * @param integer $numberOfTickets
+     *
+     * @return Booking
+     */
+    public function setNumberOfTickets($numberOfTickets)
+    {
+        $this->numberOfTickets = $numberOfTickets;
+
+        return $this;
+    }
+
+    /**
+     * Get numberOfTickets
+     *
+     * @return integer
+     */
+    public function getNumberOfTickets()
+    {
+        return $this->numberOfTickets;
     }
 
     /**
