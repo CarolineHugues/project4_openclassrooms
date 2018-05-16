@@ -46,13 +46,13 @@ class TicketManager
 			else if($computedAge > 0 AND $computedAge < 4)
 			{
 				$price = 0;
-			}			
+			}
 			else if($computedAge <= 0)
 			{
 				throw new \LogicException('L\'âge ne peut pas être négatif ou nul.');
 			}
 		}
-
+		
 		return $price;
 	}
 }
