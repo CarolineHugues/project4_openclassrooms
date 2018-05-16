@@ -5,24 +5,37 @@
 {% block title %}{{ parent() }} - Accueil{% endblock %}
 
 {% block body %}
-	<p>Informations pratiques :</p>
-	<ul>Jours d'ouverture :
-		<li>Le musée est ouvert tous les jours sauf le mardi (et fermé les 1er mai, 1er novembre et 25 décembre).</li>
-		<li>Il n’est pas possible de réserver pour les jours passés, les mardis, les 1er mai, 1er novembre et 25 décembre. Certains jours peuvent également plus être disponibles à la vente, la jauge de 1000 billets, correspondant à la capacité du musée, ayant été atteinte.</li>
-	</ul>
-	<ul> Types de billets :
-		<li>- le billet « Journée » (il n'est plus réservable une fois 14h00 passé).</li>
-		<li>- le billet « Demi-journée » (il ne permet de rentrer qu’à partir de 14h00).</li>
-	</ul>
-	<ul>Tarifs : 
-		<li>- « normal » à partir de 12 ans à 16 €</li>
-		<li>- « enfant » à partir de 4 ans et jusqu’à 12 ans, à 8 € (l’entrée est gratuite pour les enfants de moins de 4 ans)</li>
-		<li>- « senior » à partir de 60 ans pour 12  €</li>
-		<li>- « réduit » de 10 € accordé dans certaines conditions (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…). Ne pas oublier de sa carte justificative, il sera nécessaire de la présenter à l'entrée du musée.</li>
-	</ul>
-	<ul>Réception des billets :
-		<li>Il est obligatoire de fournir son adresse e-mail afin de recevoir la confirmation d'achat. L'adresse e-mail ne sera utilisée à aucune autre fin que celle-ci.</li>
-		<li>Vous ne recevrez pas de billet(s) numérique(s) mais un e-mail faisant foi de billet. Cet e-mail est à présenter le jour de la visite.</li>
-	</ul>
+	<h2>Informations pratiques :</h2>
+	<div id="tabs">
+		<ul>
+			<li><a href="#tab-1">Jours d'ouverture :</a></li>
+			<li><a href="#tab-2">Types de billets :</a></li>
+			<li><a href="#tab-3">Tarifs : </a></li>
+			<li><a href="#tab-4">Réception des billets :</a></li>
+		</ul>
+
+		<div id="tab-1">
+			<p>Le musée est ouvert tous les jours sauf le mardi (et fermé les 1er mai, 1er novembre et 25 décembre).</p>
+			<p>Il n’est pas possible de réserver pour les jours passés, les mardis, les 1er mai, 1er novembre et 25 décembre. Certains jours peuvent également plus être disponibles à la vente, la jauge de 1000 billets, correspondant à la capacité du musée, ayant été atteinte.</p>
+		</div>
+		
+		<div id="tab-2"> 
+			<p>- le billet « Journée » (il n'est plus réservable une fois 14h00 passé).</p>
+			<p>- le billet « Demi-journée » (il ne permet de rentrer qu’à partir de 14h00).</p>
+		</div>
+		
+		<div id="tab-3">
+			<p>- « normal » à partir de 12 ans à 16 €</p>
+			<p>- « enfant » à partir de 4 ans et jusqu’à 12 ans, à 8 € (l’entrée est gratuite pour les enfants de moins de 4 ans)</p>
+			<p>- « senior » à partir de 60 ans pour 12  €</p>
+			<p>- « réduit » de 10 € accordé dans certaines conditions (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…). Ne pas oublier de sa carte justificative, il sera nécessaire de la présenter à l'entrée du musée.</p>
+		</div>
+	
+		<div id="tab-4">
+			<p>Il est obligatoire de fournir son adresse e-mail afin de pouvoir recevoir la confirmation d'achat. L'adresse e-mail ne sera utilisée à aucune autre fin que celle-ci.</p>
+			<p>Vous ne recevrez pas de billet(s) numérique(s) mais un e-mail faisant foi de billet. Cet e-mail est à présenter le jour de la visite.</p>
+		</div>
+	</div>
+
 	{{ include('project4OCBookingBundle:Frontend:form.html.twig')}}
 {% endblock %}
