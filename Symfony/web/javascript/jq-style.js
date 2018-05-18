@@ -16,8 +16,7 @@ $( function() {
     	
       if (numberTickets < 0)
       {
-  
-        $("numberTickets").replace(/\D/g,'');
+        numberTickets.replace(/\D/g,'');
       }
       else if (index < numberTickets)
     	{
