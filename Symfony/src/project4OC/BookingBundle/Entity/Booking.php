@@ -41,6 +41,7 @@ class Booking extends Entity
      * @var integer
      *
      * @ORM\Column(name="numberOfTickets", type="integer")
+     * @Assert\Range(min=1)
      */
     private $numberOfTickets;
 
