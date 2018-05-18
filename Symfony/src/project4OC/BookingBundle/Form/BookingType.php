@@ -4,7 +4,7 @@
 namespace project4OC\BookingBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -18,7 +18,13 @@ class BookingType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder 
-      ->add('ticketType',      RadioType::class)
+      ->add('ticketType',      ChoiceType::class, array(
+        'choices' => array(
+          'Journée' => 'day_ticketType',
+          'Demi-journée' => 'halfDay_ticketType',
+        ),
+        'expanded' => true
+      ))
       ->add('mail',            EmailType::class)
       ->add('numberOfTickets', IntegerType::class)
       ->add('tickets',         CollectionType::class, array(
