@@ -3,6 +3,7 @@ $( function() {
     $( "#tabs" ).tabs();
 } );
 
+
 // Pouvoir ajouter et supprimer des tickets dans le formulaire de réservation selon le nombre indiqué
 $( function() {
     var $container = $('div#booking_tickets');
@@ -13,7 +14,12 @@ $( function() {
     {
     	var numberTickets = $("#booking_numberOfTickets").val(); 
     	
-    	if (index < numberTickets)
+      if (numberTickets < 0)
+      {
+  
+        $("numberTickets").replace(/\D/g,'');
+      }
+      else if (index < numberTickets)
     	{
     		while(index < numberTickets)
     		{
