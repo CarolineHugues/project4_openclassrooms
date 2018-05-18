@@ -19,20 +19,28 @@ class BookingType extends AbstractType
   {
     $builder 
       ->add('ticketType',      ChoiceType::class, array(
+        'label' => 'Type de billet',
         'choices' => array(
           'Journée' => 'day_ticketType',
           'Demi-journée' => 'halfDay_ticketType',
         ),
-        'expanded' => true
+        'expanded' => true,
       ))
-      ->add('mail',            EmailType::class)
-      ->add('numberOfTickets', IntegerType::class)
+      ->add('mail',            EmailType::class, array(
+        'label' => 'Adresse mail',
+      ))
+      ->add('numberOfTickets', IntegerType::class, array(
+        'label' => 'Nombre de billets',
+      ))
       ->add('tickets',         CollectionType::class, array(
         'entry_type'   =>      TicketType::class,
         'allow_add'    => true,
-        'allow_delete' => true
+        'allow_delete' => true,
+        'label' => 'Veuillez renseigner les informations suivantes pour chaque visiteur.'
       ))
-      ->add('save',            SubmitType::class);
+      ->add('save',            SubmitType::class, array(
+        'label' => 'Valider et payer',
+      ))
     ;
   }
 
