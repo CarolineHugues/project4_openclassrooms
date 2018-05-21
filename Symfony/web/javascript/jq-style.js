@@ -79,5 +79,6 @@ $( function() {
 });
 
 $( function() {
+    $.datepicker.setDefaults($.datepicker.regional["fr"]);
     $(".js-datepicker").datepicker()
 });
