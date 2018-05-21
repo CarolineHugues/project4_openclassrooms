@@ -4,6 +4,7 @@
 namespace project4OC\BookingBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use project4OC\BookingBundle\Form\VisitDayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -18,6 +19,12 @@ class BookingType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder 
+      ->add('visitDay',       CollectionType::class, array(
+        'entry_type' => VisitDayType::class,
+        'allow_add'    => true,
+        'allow_delete' => true,
+        'label' => 'Veuillez choisir votre jour de visite :',
+      ))
       ->add('ticketType',      ChoiceType::class, array(
         'label' => 'Type de billet',
         'choices' => array(
