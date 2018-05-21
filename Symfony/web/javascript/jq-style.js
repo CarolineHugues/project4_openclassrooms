@@ -58,3 +58,26 @@ $( function() {
       index--;
     }  	
 });
+
+// Pouvoir sélectionner un jour de visite
+$( function() {
+    var $container = $('div#booking_visitDay');
+
+    var index = $container.find(':input').length;
+
+    if (index == 0)
+    {
+      var template = $container.attr('data-prototype')
+        .replace(/__name__label__/g, 'Date')
+        .replace(/__name__/g,        index)
+      ;
+
+      var $prototype = $(template);
+
+      $container.append($prototype);
+    }
+});
+
+$( function() {
+    $(".js-datepicker").datepicker()
+});
