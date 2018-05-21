@@ -25,7 +25,7 @@ class VisitDayManager
 		$selectedDate = explode('/', $date);
 		$currentTime = explode('/', date('i/h'));
 
-		if ($date < date('d/m/Y') OR $gauge == 1000 OR $selectedDate[0] == "mardi" OR ($selectedDate[0] == 1 AND $selectedDate[1] == 05) OR ($selectedDate[0] == 1 AND $selectedDate[1] ==  11) OR ($selectedDate[0] == 25 AND $selectedDate[0] == 12) OR $currentTime[1] > 18)
+		if ($date < date('d/m/Y') OR $gauge == 1000 OR $selectedDate[0] == "mardi" OR ($selectedDate[0] == 1 AND $selectedDate[1] == 05) OR ($selectedDate[0] == 1 AND $selectedDate[1] ==  11) OR ($selectedDate[0] == 25 AND $selectedDate[0] == 12) OR ($selectedDate == date('d/m/Y') AND $currentTime[1] > 18))
 		{
 			return $availableDate = false;
 		}
