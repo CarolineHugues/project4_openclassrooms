@@ -5,6 +5,7 @@ namespace project4OC\BookingBundle\Tests;
 use project4OC\BookingBundle\Entity\Booking;
 use project4OC\BookingBundle\Entity\BookingManager;
 use project4OC\BookingBundle\Entity\Ticket;
+use project4OC\BookingBundle\Entity\VisitDay;
 use PHPUnit\Framework\TestCase;
 
 class BookingManagerTest extends TestCase
@@ -61,5 +62,15 @@ class BookingManagerTest extends TestCase
 		$bookingManager = new BookingManager();
 
 		$this->assertSame("Veuillez contacter l'équipe du musée pour réserver et avoir des renseignements à propos de notre tarif groupe.", $bookingManager->individualOrGroupRate(16));
+	}
+
+	public function testnotEnoughTicketsMessage()
+	{
+		$bookingManager = new BookingManager();
+
+		$visitDay1 = new VisitDay();
+		$visitDay1->setGauge(996);
+
+		$this->assertSame("Il reste seulement " . 4 . " tickets disponibles à la date choisie.", $bookingManager->notEnoughTickets(15, $visitDay1));
 	}
 }

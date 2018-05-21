@@ -29,6 +29,26 @@ class BookingManager
 		}
 	}
 
+	public function notEnoughTickets($numberOfWhishedTickets, VisitDay $visitDay)
+	{
+		$gauge = $visitDay->getGauge();
+		$numberAvailableTickets = (1000 - $gauge);
+		if ($numberAvailableTickets > $numberOfWhishedTickets)
+		{
+			return $gaugeAlmostReached = false;
+		}
+		else 
+		{	if ($numberAvailableTickets <= 1)
+			{
+				return $message = "Il reste seulement " . $numberAvailableTickets . " ticket disponible à la date choisie.";
+			}
+			else
+			{
+				return $message = "Il reste seulement " . $numberAvailableTickets . " tickets disponibles à la date choisie.";
+			}	
+		}
+	}
+
 	public function computeTotalPrice(Booking $booking)
 	{
 		$totalPrice = 0;
