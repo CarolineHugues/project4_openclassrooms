@@ -78,7 +78,24 @@ $( function() {
     }
 });
 
+function noTuesdayOrHolidaysOrTooLate(date) {
+  var today = new Date();
+  if (date.getDay() == 2 || (date.getDate() == 1 && date.getMonth() == 4) 
+  || (date.getDate() == 1 && date.getMonth() ==  10) || (date.getDate() == 25 && date.getMonth() == 11) || 
+  (date.getDate() == today.getDate() && today.getHours() > 18))
+  { 
+    return [false, ''];    
+  } 
+  else 
+  {
+    return [true, ''];
+  }
+}
+
 $( function() {
     $.datepicker.setDefaults($.datepicker.regional["fr"]);
-    $(".js-datepicker").datepicker()
+    $(".js-datepicker").datepicker({
+      minDate : 0,
+      beforeShowDay : noTuesdayOrHolidaysOrTooLate
+    })
 });
