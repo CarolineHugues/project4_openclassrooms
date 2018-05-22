@@ -3,6 +3,25 @@ $( function() {
     $( "#tabs" ).tabs();
 } );
 
+//Afficher seulement "Billet demi-journée" si le jour même est sélectionné, une fois midi passé
+$( function() {
+    var today = new Date();
+    var todayText = today.toLocaleDateString();;
+    $('#booking_visitDay').change(function() 
+    {
+      var selectedDate = $("#booking_visitDay_0_date").val();
+      if ((selectedDate == todayText) && (today.getHours() > 12))
+      {
+        $("#booking_ticketType_0").next('label').hide();
+        $("#booking_ticketType_0").hide();
+      }
+      else
+      { 
+        $("#booking_ticketType_0").next('label').show();
+        $("#booking_ticketType_0").show();
+      }
+    });
+} );
 
 // Pouvoir ajouter et supprimer des tickets dans le formulaire de réservation selon le nombre indiqué
 $( function() {
