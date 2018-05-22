@@ -32,6 +32,7 @@ class BookingType extends AbstractType
           'Demi-journée' => 'halfDay_ticketType',
         ),
         'expanded' => true,
+        'placeholder' => false,
       ))
       ->add('mail',            EmailType::class, array(
         'label' => 'Adresse mail',
