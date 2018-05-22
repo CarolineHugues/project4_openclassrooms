@@ -3,6 +3,74 @@ $( function() {
     $( "#tabs" ).tabs();
 } );
 
+// Pouvoir sélectionner un jour de visite
+$( function() {
+    var $container = $('div#booking_visitDay');
+
+    var index = $container.find(':input').length;
+
+    if (index == 0)
+    {
+      var template = $container.attr('data-prototype')
+        .replace(/__name__label__/g, 'Date')
+        .replace(/__name__/g,        index)
+      ;
+
+      var $prototype = $(template);
+
+      $container.append($prototype);
+    }
+});
+
+function noTuesdayOrHolidaysOrTooLate(date) {
+  var today = new Date();
+  if (date.getDay() == 2 || (date.getDate() == 1 && date.getMonth() == 4) 
+  || (date.getDate() == 1 && date.getMonth() ==  10) || (date.getDate() == 25 && date.getMonth() == 11) || 
+  (date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && 
+    date.getFullYear() == today.getFullYear() && today.getHours() > 18))
+  { 
+    return [false, ''];    
+  } 
+  else 
+  {
+    return [true, ''];
+  }
+}
+
+$( function() {
+    $.datepicker.setDefaults($.datepicker.regional["fr"]);
+    $(".js-datepicker").datepicker({
+      minDate : 0,
+      beforeShowDay : noTuesdayOrHolidaysOrTooLate
+    })
+});
+
+//Afficher les champs du formulaire au fur et à mesure
+$( function() {
+	$("#booking_ticketType").parent().hide();
+	$("#booking_mail").parent().hide();
+	$("#booking_numberOfTickets").parent().hide();
+	$("#booking_tickets").parent().hide();
+	$("#booking_save").parent().hide();
+
+	$('#booking_visitDay').change(function() 
+	{
+		$("#booking_ticketType").parent().show();
+	})
+
+	$('#booking_ticketType').change(function() 
+	{
+		$("#booking_mail").parent().show();
+		$("#booking_numberOfTickets").parent().show();
+	})
+
+	$('#booking_numberOfTickets').change(function() 
+	{
+		$("#booking_tickets").parent().show();
+		$("#booking_save").parent().show();
+	})
+});
+
 //Afficher seulement "Billet demi-journée" si le jour même est sélectionné, une fois midi passé
 $( function() {
     var today = new Date();
@@ -76,46 +144,4 @@ $( function() {
 
       index--;
     }  	
-});
-
-// Pouvoir sélectionner un jour de visite
-$( function() {
-    var $container = $('div#booking_visitDay');
-
-    var index = $container.find(':input').length;
-
-    if (index == 0)
-    {
-      var template = $container.attr('data-prototype')
-        .replace(/__name__label__/g, 'Date')
-        .replace(/__name__/g,        index)
-      ;
-
-      var $prototype = $(template);
-
-      $container.append($prototype);
-    }
-});
-
-function noTuesdayOrHolidaysOrTooLate(date) {
-  var today = new Date();
-  if (date.getDay() == 2 || (date.getDate() == 1 && date.getMonth() == 4) 
-  || (date.getDate() == 1 && date.getMonth() ==  10) || (date.getDate() == 25 && date.getMonth() == 11) || 
-  (date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && 
-    date.getFullYear() == today.getFullYear() && today.getHours() > 18))
-  { 
-    return [false, ''];    
-  } 
-  else 
-  {
-    return [true, ''];
-  }
-}
-
-$( function() {
-    $.datepicker.setDefaults($.datepicker.regional["fr"]);
-    $(".js-datepicker").datepicker({
-      minDate : 0,
-      beforeShowDay : noTuesdayOrHolidaysOrTooLate
-    })
 });
