@@ -5,12 +5,15 @@
 	<head>
 		<title>{% block title %}Système de réservation du Louvre{% endblock %}</title>
 		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="/Symfony/web/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="/Symfony/web/css/stylesheet.css">
 		<script src="/Symfony/web/javascript/jquery.js"></script>
   		<script src="/Symfony/web/javascript/jquery-ui.js"></script>
   		<script src="/Symfony/web/javascript/datepicker-fr.js"></script>
 	</head>
 	<body>
-		<img src="{{ asset('images/logo-louvre.png') }}">
+		<p id="logo"><img src="{{ asset('images/logo-louvre.png') }}"></p>
 		<h1>{{ page_title }}</h1>
 		{% block body %}{% endblock %}
 		<script src="/Symfony/web/javascript/jq-style.js"></script>
