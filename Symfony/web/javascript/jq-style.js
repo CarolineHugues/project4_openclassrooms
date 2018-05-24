@@ -79,13 +79,11 @@ $( function() {
     var selectedDate = $("#booking_visitDay_0_date").val();
     if ((selectedDate == todayText) && (today.getHours() > 12))
     {
-      $("#booking_ticketType_0").next('label').hide();
-      $("#booking_ticketType_0").hide();
+      $("#booking_ticketType .radio:nth-child(1)").hide();
     }
     else
     { 
-      $("#booking_ticketType_0").next('label').show();
-      $("#booking_ticketType_0").show();
+      $("#booking_ticketType .radio:nth-child(1)").show();
     }
   });
 
