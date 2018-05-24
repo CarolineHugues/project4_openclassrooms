@@ -16,6 +16,7 @@ class VisitDay extends Entity
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime", unique=true)
+     * @Assert\DateTime()
      */
     private $date;
 
@@ -78,6 +79,15 @@ class VisitDay extends Entity
     public function getGauge()
     {
         return $this->gauge;
+    }
+
+
+    /**
+    * @Assert\IsTrue()
+    */
+    public function isDate()
+    {
+        return false;
     }
 }
 

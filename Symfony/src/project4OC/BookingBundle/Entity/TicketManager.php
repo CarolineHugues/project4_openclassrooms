@@ -52,7 +52,7 @@ class TicketManager
 				throw new \LogicException('L\'âge ne peut pas être négatif ou nul.');
 			}
 		}
-		
+
 		return $price;
 	}
 }

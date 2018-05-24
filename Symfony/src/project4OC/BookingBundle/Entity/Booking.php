@@ -27,6 +27,7 @@ class Booking extends Entity
      * @var string
      *
      * @ORM\Column(name="ticketType", type="string", length=255)
+     * @Assert\NotNull()
      */
     private $ticketType;
 
@@ -34,6 +35,7 @@ class Booking extends Entity
      * @var string
      *
      * @ORM\Column(name="mail", type="string", length=255)
+     * @Assert\Email()
      */
     private $mail;
 

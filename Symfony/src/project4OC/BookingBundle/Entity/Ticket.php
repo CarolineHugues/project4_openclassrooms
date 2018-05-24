@@ -22,6 +22,7 @@ class Ticket extends Entity
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\Length(min=2)
      */
     private $name;
 
@@ -29,6 +30,7 @@ class Ticket extends Entity
      * @var string
      *
      * @ORM\Column(name="surname", type="string", length=255)
+     * @Assert\Length(min=2)
      */
     private $surname;
 
@@ -36,6 +38,7 @@ class Ticket extends Entity
      * @var \DateTime
      *
      * @ORM\Column(name="birthDate", type="date")
+     * @Assert\Date()
      */
     private $birthDate;
 
@@ -43,6 +46,7 @@ class Ticket extends Entity
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     * @Assert\Country()
      */
     private $country;
 
