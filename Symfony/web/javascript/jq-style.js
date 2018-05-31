@@ -41,6 +41,7 @@ $( function() {
     }
   }
 
+  $('.js-datepicker').prop('readonly', true);
   $.datepicker.setDefaults($.datepicker.regional["fr"]);
   $(".js-datepicker").datepicker({
     minDate : 0,
@@ -73,11 +74,24 @@ $( function() {
 
 //Afficher seulement "Billet demi-journée" si le jour même est sélectionné, une fois midi passé
   var today = new Date();
-  var todayText = today.toLocaleDateString();;
+  function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [day, month, year].join('-');
+  }
+
+  var todayDate = formatDate(today);
+  
   $('#booking_visitDay').change(function() 
   {
-    var selectedDate = $("#booking_visitDay_0_date").val();
-    if ((selectedDate == todayText) && (today.getHours() > 12))
+    var selectedDate = $("#booking_visitDay_date").val();
+    if ((selectedDate == todayDate) && (today.getHours() > 12))
     {
       $("#booking_ticketType .radio:nth-child(1)").hide();
     }
