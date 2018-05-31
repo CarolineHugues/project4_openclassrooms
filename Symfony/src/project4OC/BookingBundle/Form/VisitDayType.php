@@ -4,7 +4,7 @@
 namespace project4OC\BookingBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,10 +13,8 @@ class VisitDayType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('date',        DateType::class, array(
-        'label' => ' ',
-        'widget' => 'single_text',
-        'html5' => false,
+      ->add('date',        TextType::class, array(
+        'label' => 'Date',
         'attr' => ['class' => 'js-datepicker'],
       ))
     ;
