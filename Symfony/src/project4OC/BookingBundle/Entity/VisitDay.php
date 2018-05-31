@@ -4,12 +4,15 @@ namespace project4OC\BookingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\DateTime;
+use project4OC\BookingBundle\Entity\VisitDayManager;
 
 /**
  * VisitDay
  *
  * @ORM\Table(name="visit_day")
  * @ORM\Entity(repositoryClass="project4OC\BookingBundle\Repository\VisitDayRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class VisitDay extends Entity
 {
@@ -17,7 +20,7 @@ class VisitDay extends Entity
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime", unique=true)
-     * @Assert\DateTime()
+     * @Assert\Datetime()
      */
     private $date;
 
@@ -87,5 +90,18 @@ class VisitDay extends Entity
         $visitDayManager = new visitDayManager();
         $newGauge = $visitDayManager->fillGauge($this, $numberReservedTickets);
         SELF::setGauge($newGauge);
+    }
+
+    /**
+    *
+    *@ORM\PrePersist
+    */
+    public function formatDateToDb()
+    {
+        $date = $this->getDate();
+        $formatDate = new \DateTime($date);
+        $formatDate->format('yy-mm-dd');
+
+        SELF::setDate($formatDate);
     }
 }
