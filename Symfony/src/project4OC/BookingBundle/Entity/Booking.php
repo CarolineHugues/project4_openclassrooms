@@ -15,12 +15,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Booking extends Entity
 {
 	/**
-	 * @ORM\OneToMany(targetEntity="project4OC\BookingBundle\Entity\Ticket", mappedBy="booking")
+	 * @ORM\OneToMany(targetEntity="project4OC\BookingBundle\Entity\Ticket", mappedBy="booking", cascade={"persist"})
 	 */
 	private $tickets;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\VisitDay")
+	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\VisitDay", cascade={"persist"})
 	 */
 	private $visitDay;
 
