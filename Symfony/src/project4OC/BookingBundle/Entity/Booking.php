@@ -58,6 +58,7 @@ class Booking extends Entity
 
     public function __construct()
     {
+        $this->bookingCode = uniqid();
     	$this->tickets = new ArrayCollection();
     }
 
