@@ -19,11 +19,8 @@ class BookingType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder 
-      ->add('visitDay',       CollectionType::class, array(
-        'entry_type' => VisitDayType::class,
-        'allow_add'    => true,
-        'allow_delete' => true,
-        'label' => 'Veuillez choisir votre jour de visite :',
+      ->add('visitDay',   VisitDayType::class, array(
+        'label' => 'Veuillez choisir votre jour de visite :'
       ))
       ->add('ticketType',      ChoiceType::class, array(
         'label' => 'Type de billet',
@@ -44,6 +41,7 @@ class BookingType extends AbstractType
         'entry_type'   =>      TicketType::class,
         'allow_add'    => true,
         'allow_delete' => true,
+        'by_reference' => false,
         'label' => 'Veuillez renseigner les informations suivantes pour chaque visiteur.'
       ))
       ->add('save',            SubmitType::class, array(
