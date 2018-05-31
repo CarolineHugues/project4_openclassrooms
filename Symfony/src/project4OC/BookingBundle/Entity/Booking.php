@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="booking")
  * @ORM\Entity(repositoryClass="project4OC\BookingBundle\Repository\BookingRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Booking extends Entity
 {
@@ -58,10 +59,10 @@ class Booking extends Entity
 
     public function __construct()
     {
-        $this->bookingCode = uniqid();
-    	$this->tickets = new ArrayCollection();
+    	$this->bookingCode = uniqid();
+        $this->tickets = new ArrayCollection();
     }
-
+    
     public function addTicket(Ticket $ticket)
     {
     	$this->tickets[] = $ticket;
@@ -188,5 +189,14 @@ class Booking extends Entity
     {
         return $this->bookingCode;
     }
-}
 
+    /**
+    *
+    *@ORM\PrePersist
+    */
+    public function fillNewGauge()
+    {
+        $numberReservedTickets = $this->getNumberOfTickets();
+        $this->getVisitDay()->newGauge($numberReservedTickets);
+    }
+}

@@ -82,13 +82,10 @@ class VisitDay extends Entity
         return $this->gauge;
     }
 
-
-    /**
-    * @Assert\IsTrue()
-    */
-    public function isDate()
+    public function newGauge($numberReservedTickets)
     {
-        return false;
+        $visitDayManager = new visitDayManager();
+        $newGauge = $visitDayManager->fillGauge($this, $numberReservedTickets);
+        SELF::setGauge($newGauge);
     }
 }
-
