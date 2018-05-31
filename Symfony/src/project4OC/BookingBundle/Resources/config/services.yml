@@ -2,3 +2,6 @@ services:
 #    project4_oc_booking.example:
 #        class: project4OC\BookingBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+services:
+    project4_oc_booking.formatdate:
+        class: project4OC\BookingBundle\FormatDate\P4OCFormatDate
