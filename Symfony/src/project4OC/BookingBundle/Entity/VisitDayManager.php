@@ -21,11 +21,12 @@ class VisitDayManager
 	public function available(VisitDay $visitDay)
 	{
 		$date = $visitDay->getDate();
+		$dateText = $date->format('w/d/m/y');
 		$gauge = $visitDay->getGauge();
-		$selectedDate = explode('/', $date);
+		$selectedDate = explode('/', $dateText);
 		$currentTime = explode('/', date('i/h'));
 
-		if ($date < date('d/m/Y') OR $gauge == 1000 OR $selectedDate[0] == "mardi" OR ($selectedDate[0] == 1 AND $selectedDate[1] == 05) OR ($selectedDate[0] == 1 AND $selectedDate[1] ==  11) OR ($selectedDate[0] == 25 AND $selectedDate[0] == 12) OR ($selectedDate == date('d/m/Y') AND $currentTime[1] > 18))
+		if ($date < date('w/d/m/Y') OR $gauge >= 1000 OR $selectedDate[0] == 2 OR ($selectedDate[1] == 1 AND $selectedDate[2] == 05) OR ($selectedDate[1] == 1 AND $selectedDate[2] ==  11) OR ($selectedDate[1] == 25 AND $selectedDate[2] == 12) OR ($selectedDate == date('w/d/m/Y') AND $currentTime[1] > 18))
 		{
 			return $availableDate = false;
 		}
