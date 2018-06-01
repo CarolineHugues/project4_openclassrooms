@@ -31,7 +31,7 @@ $( function() {
     if (date.getDay() == 2 || (date.getDate() == 1 && date.getMonth() == 4) 
     || (date.getDate() == 1 && date.getMonth() ==  10) || (date.getDate() == 25 && date.getMonth() == 11) || 
     (date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && 
-    date.getFullYear() == today.getFullYear() && today.getHours() > 18))
+    date.getFullYear() == today.getFullYear() && today.getHours() >= 18))
     { 
       return [false, ''];    
     } 
@@ -91,7 +91,7 @@ $( function() {
   $('#booking_visitDay').change(function() 
   {
     var selectedDate = $("#booking_visitDay_date").val();
-    if ((selectedDate == todayDate) && (today.getHours() > 12))
+    if ((selectedDate == todayDate) && (today.getHours() >= 12))
     {
       $("#booking_ticketType .radio:nth-child(1)").hide();
     }
