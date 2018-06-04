@@ -42,7 +42,7 @@ class BookingType extends AbstractType
         'allow_add'    => true,
         'allow_delete' => true,
         'by_reference' => false,
-        'label' => 'Veuillez renseigner les informations suivantes pour chaque visiteur.'
+        'label' => 'Veuillez renseigner les informations suivantes pour chaque visiteur :'
       ))
       ->add('save',            SubmitType::class, array(
         'label' => 'Valider et payer',
