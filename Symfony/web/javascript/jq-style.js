@@ -68,8 +68,18 @@ $( function() {
 
 	$('#booking_numberOfTickets').change(function() 
 	{
-		$("#booking_tickets").parent().show();
-		$("#booking_save").parent().show();
+    if ($('#booking_numberOfTickets').val() < 15)
+    {
+		  $("#booking_tickets").parent().show();
+		  $("#booking_save").parent().show();
+      $('#grouprate').remove();
+    }
+    else if ($('#grouprate').length == 0)
+    {
+      $("#booking_tickets").parent().hide();
+      $("#booking_save").parent().hide();
+      $('#booking_numberOfTickets').after('<div id="grouprate"><p>Il n\'est <strong>pas possible de réserver sur ce site au-delà de 14 tickets</strong>.</p><p>Veuillez <strong>contacter l\'équipe du musée</strong> pour réserver et avoir des renseignements à propos de <strong>notre tarif groupe</strong>.</p></div>');
+    }
 	})
 
 //Afficher seulement "Billet demi-journée" si le jour même est sélectionné, une fois midi passé
