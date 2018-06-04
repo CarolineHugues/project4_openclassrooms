@@ -68,7 +68,12 @@ $( function() {
 
 	$('#booking_numberOfTickets').change(function() 
 	{
-    if ($('#booking_numberOfTickets').val() < 15)
+    if ($('#booking_numberOfTickets').val() <= 0)
+    {
+      $("#booking_tickets").parent().hide();
+      $("#booking_save").parent().hide();
+    }
+    else if ($('#booking_numberOfTickets').val() < 15)
     {
 		  $("#booking_tickets").parent().show();
 		  $("#booking_save").parent().show();
