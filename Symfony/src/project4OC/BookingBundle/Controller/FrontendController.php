@@ -23,6 +23,15 @@ class FrontendController extends Controller
     	{
 			$formatDate = $this->container->get('project4_oc_booking.formatdate');
 			$date =  $formatDate->formatVisitDayDateToDb($booking);
+
+			$em = $this->getDoctrine()->getManager();
+			$visitDay = $em->getRepository('project4OCBookingBundle:VisitDay')->findOneByDate($date);
+
+			
+			if (null !== $visitDay)
+			{
+				$booking->setVisitDay($visitDay);
+       		}
        	}
 
 		return $this->render('project4OCBookingBundle:Frontend:index.html.twig', array('page_title' => 'Réservation en ligne', 'form' => $form->createView(),));
