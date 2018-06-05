@@ -12,7 +12,6 @@ use project4OC\BookingBundle\Entity\VisitDayManager;
  *
  * @ORM\Table(name="visit_day")
  * @ORM\Entity(repositoryClass="project4OC\BookingBundle\Repository\VisitDayRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class VisitDay extends Entity
 {
@@ -85,23 +84,9 @@ class VisitDay extends Entity
         return $this->gauge;
     }
 
-    public function newGauge($numberReservedTickets)
+    public function fillGauge($numberReservedTickets)
     {
-        $visitDayManager = new visitDayManager();
-        $newGauge = $visitDayManager->fillGauge($this, $numberReservedTickets);
-        SELF::setGauge($newGauge);
-    }
-
-    /**
-    *
-    *@ORM\PrePersist
-    */
-    public function formatDateToDb()
-    {
-        $date = $this->getDate();
-        $formatDate = new \DateTime($date);
-        $formatDate->format('yy-mm-dd');
-
-        SELF::setDate($formatDate);
+        $newGauge = $this->getGauge() + $numberReservedTickets;
+        $this->setGauge($newGauge);
     }
 }

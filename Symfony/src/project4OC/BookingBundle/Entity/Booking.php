@@ -197,6 +197,6 @@ class Booking extends Entity
     public function fillNewGauge()
     {
         $numberReservedTickets = $this->getNumberOfTickets();
-        $this->getVisitDay()->newGauge($numberReservedTickets);
+        $this->getVisitDay()->fillGauge($numberReservedTickets);
     }
 }
