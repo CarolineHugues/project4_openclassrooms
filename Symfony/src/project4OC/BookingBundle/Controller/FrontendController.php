@@ -41,6 +41,11 @@ class FrontendController extends Controller
 				{
 					return new Response((string) $listErrors);
 				} 
+				else 
+				{
+					$em->persist($booking);
+      				$em->flush();	
+				}
        		}
        	}
 
