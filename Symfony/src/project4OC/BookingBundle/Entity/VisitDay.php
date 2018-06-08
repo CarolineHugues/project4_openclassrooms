@@ -19,7 +19,7 @@ class VisitDay extends Entity
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime", unique=true)
-     * @Assert\Datetime()
+     * @Assert\DateTime()
      */
     private $date;
 
