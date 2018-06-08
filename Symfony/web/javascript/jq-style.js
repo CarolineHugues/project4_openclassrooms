@@ -26,12 +26,64 @@ $( function() {
     $container.append($prototype);
   }
 
+
+$.getJSON('http://localhost/Symfony/web/app_dev.php/visitDays', function( data ) {
+  function getY(visitDaysDate)
+  {
+    return visitDaysDate[0] + visitDaysDate[1] + visitDaysDate[2] + visitDaysDate[3];
+  }
+
+  function getM(visitDaysDate)
+  {
+    if (visitDaysDate[5] == "0")
+    {
+      return visitDaysDate[6] - 1;
+    }
+    else
+    {
+      return (visitDaysDate[5] + visitDaysDate[6]) - 1;
+    }
+  }
+
+  function getD(visitDaysDate)
+  {
+    if (visitDaysDate[8] == "0")
+    {
+      return visitDaysDate[9];
+    }
+    else
+    {
+      return visitDaysDate[8] + visitDaysDate[9];
+    }
+  }
+
+  function isAvailable(date, i) {
+    var visitDays = data;
+    var visitDaysDate = visitDays[i].date.date;
+    if  (date.getFullYear() == getY(visitDaysDate) && date.getMonth() == getM(visitDaysDate) && date.getDate() == getD(visitDaysDate) && visitDays[i].gauge >= "1000")
+    { 
+      return false;
+    } 
+    else 
+    {
+      return true;
+    }
+  }
+
   function noTuesdayOrHolidaysOrTooLate(date) {
     var today = new Date();
+    var visitDays = data;
+    for (var i = 0; i < visitDays.length; i++) {
+      var isAvailableDate = isAvailable(date, i);
+      if (isAvailableDate == false)
+      {
+        break;
+      }
+    }
     if (date.getDay() == 2 || (date.getDate() == 1 && date.getMonth() == 4) 
     || (date.getDate() == 1 && date.getMonth() ==  10) || (date.getDate() == 25 && date.getMonth() == 11) || 
     (date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && 
-    date.getFullYear() == today.getFullYear() && today.getHours() >= 18))
+    date.getFullYear() == today.getFullYear() && today.getHours() >= 18) || isAvailableDate == false)
     { 
       return [false, ''];    
     } 
@@ -47,6 +99,7 @@ $( function() {
     minDate : 0,
     beforeShowDay : noTuesdayOrHolidaysOrTooLate
   })
+});
 
 //Afficher les champs du formulaire au fur et à mesure
 	$("#booking_ticketType").parent().hide();
@@ -74,11 +127,11 @@ $( function() {
       $("#booking_save").parent().hide();
     }
     else if ($('#booking_numberOfTickets').val() < 15)
-    {
-		  if($('#totalprice').length == 0 && $('#grouprate').length == 0)
+    { 
+      if($('#totalprice').length == 0 && $('#grouprate').length == 0)
       {
-        $("#booking_tickets").parent().show();
-        $("#booking_save").parent().show();
+		    $("#booking_tickets").parent().show();
+		    $("#booking_save").parent().show();
         $('#booking_save').before('<div><p id="totalprice">Prix total à régler : 0€</p></div>');
       }
       else
@@ -173,7 +226,7 @@ $( function() {
     $ticketToDelete.remove();
 
     index--;
-  } 
+  }  	
 
 // Calcul du prix total
   function computeAge(i) 
@@ -242,5 +295,5 @@ $( function() {
   {
     var totalPrice =  computeTotalPrice();
     $('#totalprice').text('Prix total à régler : ' + totalPrice + '€');
-  }) 	
+  })
 });
