@@ -75,9 +75,18 @@ $( function() {
     }
     else if ($('#booking_numberOfTickets').val() < 15)
     {
-		  $("#booking_tickets").parent().show();
-		  $("#booking_save").parent().show();
-      $('#grouprate').remove();
+		  if($('#totalprice').length == 0 && $('#grouprate').length == 0)
+      {
+        $("#booking_tickets").parent().show();
+        $("#booking_save").parent().show();
+        $('#booking_save').before('<div><p id="totalprice">Prix total à régler : 0€</p></div>');
+      }
+      else
+      {
+        $("#booking_tickets").parent().show();
+        $("#booking_save").parent().show();
+        $('#grouprate').remove();
+      }
     }
     else if ($('#grouprate').length == 0)
     {
@@ -164,5 +173,74 @@ $( function() {
     $ticketToDelete.remove();
 
     index--;
-  }  	
+  } 
+
+// Calcul du prix total
+  function computeAge(i) 
+  {
+    var todaysDate = new Date();
+    var birthD = $("#booking_tickets_"+ i +"_birthdate_day").val();
+    var birthM = $("#booking_tickets_"+ i +"_birthdate_month").val();
+    var birthY = $("#booking_tickets_"+ i +"_birthdate_year").val();
+
+    if((birthM < todaysDate.getMonth()) || ((birthM == todaysDate.getMonth()) && (birthD <= todaysDate.getDate())))
+    {
+      var age = todaysDate.getFullYear() - birthY;
+    }
+    else
+    {
+      var age = todaysDate.getFullYear() - birthY - 1;
+    } 
+
+    return age;
+  }
+
+  function computePrice(i)
+  {
+   var age = computeAge(i);
+
+    if ($('#booking_tickets_'+ i +'_reducedRate').is(':checked'))
+    {
+      price = 10;
+    }
+    else
+    {
+      if(age >= 60)
+      {
+        var price = 12;
+      }
+      else if(age >= 12)
+      {
+        var price = 16;
+      }
+      else if(age >= 4)
+      {
+        var price = 8;
+      }
+      else if(age > 0 && age < 4)
+      {
+        var price = 0;
+      }
+    }
+
+    return price;
+  }
+
+  function computeTotalPrice()
+  {
+    var numberOfTickets = $('#booking_numberOfTickets').val();
+    var totalPrice = 0;
+    for (i = 0; i < numberOfTickets; i++)
+    {
+      var price = computePrice(i);
+      totalPrice += price;
+    }
+    return totalPrice;
+  }
+
+  $('#booking_tickets').click(function() 
+  {
+    var totalPrice =  computeTotalPrice();
+    $('#totalprice').text('Prix total à régler : ' + totalPrice + '€');
+  }) 	
 });

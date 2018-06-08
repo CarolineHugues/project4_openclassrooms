@@ -113,6 +113,7 @@ h3.ui-state-active {
 .form-group label {
 	padding-right:10px;
 	padding-top: 5px;
+	text-align:justify;
 }
 
 #booking_visitDay_date {
@@ -155,11 +156,19 @@ h3.ui-state-active {
     margin-top:10px;
 }
 
-#grouprate {
-	margin:10px 0 10px 0;
+#grouprate, #totalprice {
+	margin:15px 0 15px 0;
 	background: #F5F5F5;
 	padding:10px 10px 10px 10px;
 	border: 5px ridge #5ba4a4;
+}
+
+#totalprice {
+	text-align:center;
+	font-weight: bold;
+	width:250px;
+	margin-right:auto;
+	margin-left:auto;
 }
 
 #booking_save {
