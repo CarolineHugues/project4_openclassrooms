@@ -1,3 +1,7 @@
 project4_oc_booking_homepage:
     path:     /
     defaults: { _controller: project4OCBookingBundle:Frontend:index }
+
+project4_oc_booking_getListVisitDay:
+    path:     /visitDays
+    defaults: { _controller: project4OCBookingBundle:Frontend:getListVisitDay }
