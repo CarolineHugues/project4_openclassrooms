@@ -63,7 +63,6 @@ class Ticket extends Entity
         $this->reducedRate = false;
     }
     
-
     public function setBooking (Booking $booking)
     {
     	$this->booking = $booking;
