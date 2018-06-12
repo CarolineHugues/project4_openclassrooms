@@ -36,7 +36,8 @@ class FrontendController extends Controller
 			$visitDay = $em->getRepository('project4OCBookingBundle:VisitDay')->findOneByDate($date);
 
 			$verifyAvailableDate = $this->container->get('project4_oc_booking.verifyavailabledate');
-			if ($verifyAvailableDate->available($visitDay) == true && $verifyAvailableDate->availableAllDay($visitDay) == true && $verifyAvailableDate->notEnoughTickets($visitDay, $booking) == false && $verifyAvailableDate->individualOrGroupRate($booking))
+
+			if ($verifyAvailableDate->available($visitDay) == true && $verifyAvailableDate->availableAllDay($date) == true && $verifyAvailableDate->notEnoughTickets($visitDay, $booking) == false && $verifyAvailableDate->individualOrGroupRate($booking))
 			{
 				if (null !== $visitDay)
 				{
