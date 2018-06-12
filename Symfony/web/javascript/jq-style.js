@@ -9,97 +9,81 @@ $( function() {
     $( "#accordion" ).accordion();
   }
 
-// Pouvoir sélectionner un jour de visite
-  var $container = $('div#booking_visitDay');
-
-  var index = $container.find(':input').length;
-
-  if (index == 0)
-  {
-    var template = $container.attr('data-prototype')
-      .replace(/__name__label__/g, 'Date')
-      .replace(/__name__/g,        index)
-    ;
-
-    var $prototype = $(template);
-      
-    $container.append($prototype);
-  }
-
-
-$.getJSON('http://localhost/Symfony/web/app_dev.php/visitDays', function( data ) {
-  function getY(visitDaysDate)
-  {
-    return visitDaysDate[0] + visitDaysDate[1] + visitDaysDate[2] + visitDaysDate[3];
-  }
-
-  function getM(visitDaysDate)
-  {
-    if (visitDaysDate[5] == "0")
+// Affichage calendrier dans le champ de la date
+  $.getJSON('http://localhost/Symfony/web/app_dev.php/visitDays', function( data ) {
+    function getY(visitDaysDate)
     {
-      return visitDaysDate[6] - 1;
+      return visitDaysDate[0] + visitDaysDate[1] + visitDaysDate[2] + visitDaysDate[3];
     }
-    else
-    {
-      return (visitDaysDate[5] + visitDaysDate[6]) - 1;
-    }
-  }
 
-  function getD(visitDaysDate)
-  {
-    if (visitDaysDate[8] == "0")
+    function getM(visitDaysDate)
     {
-      return visitDaysDate[9];
-    }
-    else
-    {
-      return visitDaysDate[8] + visitDaysDate[9];
-    }
-  }
-
-  function isAvailable(date, i) {
-    var visitDays = data;
-    var visitDaysDate = visitDays[i].date.date;
-    if  (date.getFullYear() == getY(visitDaysDate) && date.getMonth() == getM(visitDaysDate) && date.getDate() == getD(visitDaysDate) && visitDays[i].gauge >= "1000")
-    { 
-      return false;
-    } 
-    else 
-    {
-      return true;
-    }
-  }
-
-  function noTuesdayOrHolidaysOrTooLate(date) {
-    var today = new Date();
-    var visitDays = data;
-    for (var i = 0; i < visitDays.length; i++) {
-      var isAvailableDate = isAvailable(date, i);
-      if (isAvailableDate == false)
+      if (visitDaysDate[5] == "0")
       {
-        break;
+        return visitDaysDate[6] - 1;
+      }
+      else
+      {
+        return (visitDaysDate[5] + visitDaysDate[6]) - 1;
       }
     }
-    if (date.getDay() == 2 || (date.getDate() == 1 && date.getMonth() == 4) 
-    || (date.getDate() == 1 && date.getMonth() ==  10) || (date.getDate() == 25 && date.getMonth() == 11) || 
-    (date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && 
-    date.getFullYear() == today.getFullYear() && today.getHours() >= 18) || isAvailableDate == false)
-    { 
-      return [false, ''];    
-    } 
-    else 
-    {
-      return [true, ''];
-    }
-  }
 
-  $('.js-datepicker').prop('readonly', true);
-  $.datepicker.setDefaults($.datepicker.regional["fr"]);
-  $(".js-datepicker").datepicker({
-    minDate : 0,
-    beforeShowDay : noTuesdayOrHolidaysOrTooLate
-  })
-});
+    function getD(visitDaysDate)
+    {
+      if (visitDaysDate[8] == "0")
+      {
+        return visitDaysDate[9];
+      }
+      else
+      {
+        return visitDaysDate[8] + visitDaysDate[9];
+      }
+    }
+
+    function isAvailable(date, i) {
+      var visitDays = data;
+      var visitDaysDate = visitDays[i].date.date;
+      if  (date.getFullYear() == getY(visitDaysDate) && date.getMonth() == getM(visitDaysDate) && date.getDate() == getD(visitDaysDate) && visitDays[i].gauge >= "1000")
+      { 
+        return false;
+      } 
+      else 
+      {
+        return true;
+      }
+    }
+
+    function noTuesdayOrHolidaysOrTooLate(date) {
+      var today = new Date();
+      var visitDays = data;
+      for (var i = 0; i < visitDays.length; i++) {
+        var isAvailableDate = isAvailable(date, i);
+        if (isAvailableDate == false)
+        {
+          break;
+        }
+      }
+      
+      if (date.getDay() == 2 || (date.getDate() == 1 && date.getMonth() == 4) 
+      || (date.getDate() == 1 && date.getMonth() ==  10) || (date.getDate() == 25 && date.getMonth() == 11) || 
+      (date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && 
+      date.getFullYear() == today.getFullYear() && today.getHours() >= 18) || isAvailableDate == false)
+      { 
+        return [false, ''];    
+      } 
+      else 
+      {
+        return [true, ''];
+      }
+    }
+
+    $('.js-datepicker').prop('readonly', true);
+    $.datepicker.setDefaults($.datepicker.regional["fr"]);
+    $(".js-datepicker").datepicker({
+      minDate : 0,
+      beforeShowDay : noTuesdayOrHolidaysOrTooLate
+    })
+  });
 
 //Afficher les champs du formulaire au fur et à mesure
 	$("#booking_ticketType").parent().hide();
@@ -254,7 +238,7 @@ $.getJSON('http://localhost/Symfony/web/app_dev.php/visitDays', function( data )
 
     if ($('#booking_tickets_'+ i +'_reducedRate').is(':checked'))
     {
-      price = 10;
+      var price = 10;
     }
     else
     {
