@@ -76,7 +76,8 @@ class FrontendController extends Controller
 	public function getListVisitDayAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-        $visitDays = $em->getRepository('project4OCBookingBundle:VisitDay')->findAll();
+		$gauge = 1000;
+        $visitDays = $em->getRepository('project4OCBookingBundle:VisitDay')->findByGauge($gauge);
 
         $formatted = [];
         foreach ($visitDays as $visitDay) {

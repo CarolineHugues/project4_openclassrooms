@@ -10,6 +10,8 @@ $( function() {
   }
 
 // Affichage calendrier dans le champ de la date
+  $('.js-datepicker').prop('readonly', true);
+
   $.getJSON('http://localhost/Symfony/web/app_dev.php/visitDays', function( data ) {
     function getY(visitDaysDate)
     {
@@ -43,7 +45,7 @@ $( function() {
     function isAvailable(date, i) {
       var visitDays = data;
       var visitDaysDate = visitDays[i].date.date;
-      if  (date.getFullYear() == getY(visitDaysDate) && date.getMonth() == getM(visitDaysDate) && date.getDate() == getD(visitDaysDate) && visitDays[i].gauge >= "1000")
+      if  (date.getFullYear() == getY(visitDaysDate) && date.getMonth() == getM(visitDaysDate) && date.getDate() == getD(visitDaysDate))
       { 
         return false;
       } 
@@ -56,12 +58,9 @@ $( function() {
     function noTuesdayOrHolidaysOrTooLate(date) {
       var today = new Date();
       var visitDays = data;
-      for (var i = 0; i < visitDays.length; i++) {
+      for (var i = 0; i < visitDays.length; i++) 
+      {
         var isAvailableDate = isAvailable(date, i);
-        if (isAvailableDate == false)
-        {
-          break;
-        }
       }
       
       if (date.getDay() == 2 || (date.getDate() == 1 && date.getMonth() == 4) 
@@ -77,7 +76,6 @@ $( function() {
       }
     }
 
-    $('.js-datepicker').prop('readonly', true);
     $.datepicker.setDefaults($.datepicker.regional["fr"]);
     $(".js-datepicker").datepicker({
       minDate : 0,
