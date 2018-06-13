@@ -6,7 +6,8 @@ class TicketManager
 {
 	public function computeAge($birthDate)
 	{
-		$birthD = explode('/', $birthDate);
+		$birthDateText = $birthDate->format('d/m/Y');
+		$birthD = explode('/', $birthDateText);
 		$todaysDate = explode('/', date('d/m/Y'));
 
 		if(($birthD[1] < $todaysDate[1]) OR (($birthD[1] == $todaysDate[1]) AND ($birthD[0] <= $todaysDate[0])))
