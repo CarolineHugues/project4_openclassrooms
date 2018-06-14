@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Booking extends Entity
 {
 	/**
-	 * @ORM\OneToMany(targetEntity="project4OC\BookingBundle\Entity\Ticket", mappedBy="booking", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="project4OC\BookingBundle\Entity\Ticket", mappedBy="booking", cascade={"all"})
 	 */
 	private $tickets;
 
