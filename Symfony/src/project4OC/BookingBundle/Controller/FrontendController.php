@@ -27,12 +27,13 @@ class FrontendController extends Controller
 
     	$form = $this->get('form.factory')->create(BookingType::class, $booking);
 
+    	$em = $this->getDoctrine()->getManager();
+
     	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) 
     	{
 			$formatDate = $this->container->get('project4_oc_booking.formatdate');
 			$date =  $formatDate->formatVisitDayDateToDb($booking);
 
-			$em = $this->getDoctrine()->getManager();
 			$visitDay = $em->getRepository('project4OCBookingBundle:VisitDay')->findOneByDate($date);
 
 			$verifyAvailableDate = $this->container->get('project4_oc_booking.verifyavailabledate');
@@ -52,13 +53,12 @@ class FrontendController extends Controller
 				} 
 				else 
 				{
-					$em->persist($booking);
-      				$em->flush();
-
-      				$request->getSession()->getFlashBag()->add('notice', 'Réservation bien enregistrée.');
-
-      				/*return $this->render('project4OCBookingBundle:Frontend:index.html.twig', array('page_title' => 'Réservation en ligne', 'form' => $form->createView(),));*/
-					return new Response("La réservation est bien enregistrée !");	
+      				$em->detach($booking);
+					$session = $request->getSession();
+					$session->set('booking', $booking);
+					$bookingManager = new BookingManager();
+					$totalPrice = $bookingManager->computeTotalPrice($booking);
+					return $this->render('project4OCBookingBundle:Frontend:purchase.html.twig', array('page_title' => 'Réservation en ligne', 'booking' => $booking,'totalPrice' => $totalPrice));
 				}
        		}
        		else
