@@ -90,4 +90,37 @@ class FrontendController extends Controller
 
         return new JsonResponse($formatted);
 	}
+
+
+	public function confirmationAction(Request $request)
+	{
+
+		\Stripe\Stripe::setApiKey("sk_test_SkklxJXLce11qiJtfABTlWar");
+
+		$token = $_POST['stripeToken'];
+
+		$em = $this->getDoctrine()->getManager();
+    	$session = $request->getSession();
+		$booking = $session->get('booking');
+		$bookingManager = new BookingManager();
+		$totalPrice = $bookingManager->computeTotalPrice($booking);
+		$totalPriceCents = $totalPrice . '00';
+		$customer = $booking->getMail();
+		$nbOfTickets = $booking->getNumberOfTickets();
+		$visitDay = $booking->getVisitDay()->getDate();
+		$visitDayText = $visitDay->format('d/m/Y');
+
+		$charge = \Stripe\Charge::create([
+		    'amount' => $totalPriceCents,
+		    'currency' => 'eur',
+		    'receipt_email' => $customer,
+		    'description' => 'Paiement de ' . $nbOfTickets . ' billet(s) pour le ' . $visitDayText . ' par ' . $customer,
+		    'source' => $token,
+		]);
+
+		$booking = $em->merge($booking);
+		$em->persist($booking);
+		$em->flush();
+    	return $this->render('project4OCBookingBundle:Frontend:confirmation.html.twig', array('page_title' => 'Réservation en ligne',));	
+	}
 }
