@@ -19,6 +19,9 @@ class BookingType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder 
+      ->add('mail',            EmailType::class, array(
+        'label' => 'Veuillez saisir votre adresse mail pour pouvoir réserver :',
+      ))
       ->add('visitDay',   VisitDayType::class, array(
         'label' => 'Veuillez choisir votre jour de visite :'
       ))
@@ -30,9 +33,6 @@ class BookingType extends AbstractType
         ),
         'expanded' => true,
         'placeholder' => false,
-      ))
-      ->add('mail',            EmailType::class, array(
-        'label' => 'Adresse mail',
       ))
       ->add('numberOfTickets', IntegerType::class, array(
         'label' => 'Nombre de billets',

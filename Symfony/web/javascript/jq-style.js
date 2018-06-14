@@ -84,11 +84,16 @@ $( function() {
   });
 
 //Afficher les champs du formulaire au fur et à mesure
-	$("#booking_ticketType").parent().hide();
-	$("#booking_mail").parent().hide();
+	$('#booking_visitDay').parent().hide();
+  $("#booking_ticketType").parent().hide();
 	$("#booking_numberOfTickets").parent().hide();
 	$("#booking_tickets").parent().hide();
 	$("#booking_save").parent().hide();
+
+  $('#booking_mail').parent().change(function() 
+  {
+    $("#booking_visitDay").parent().show();
+  })
 
 	$('#booking_visitDay').change(function() 
 	{
@@ -97,7 +102,6 @@ $( function() {
 
 	$('#booking_ticketType').change(function() 
 	{
-		$("#booking_mail").parent().show();
 		$("#booking_numberOfTickets").parent().show();
 	})
 
