@@ -45,7 +45,7 @@ class BookingType extends AbstractType
         'label' => 'Veuillez renseigner les informations suivantes pour chaque visiteur :'
       ))
       ->add('save',            SubmitType::class, array(
-        'label' => 'Valider et payer',
+        'label' => 'Valider sa réservation',
       ))
     ;
   }
