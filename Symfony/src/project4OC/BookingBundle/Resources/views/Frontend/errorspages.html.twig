@@ -1,0 +1,17 @@
+{# src/project4OC/BookingBundle/Resources/views/Frontend/errospages.html.twig #}
+
+{% extends "project4OCBookingBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Réservation impossible{% endblock %}
+
+{% block body %}
+	<section class="col-md-offset-3 col-md-6 col-md-offset-3 col-xs-12">
+		<h2>Réservation impossible</h2>
+		<div id="error-message">
+			<p>{{ message }}</p>
+		</div>
+		<div id="button-errorspages">
+			<button type="submit" class="btn-default btn" onclick="history.back()">Modifier sa réservation</button>
+		</div>
+	</section>
+{% endblock %}
