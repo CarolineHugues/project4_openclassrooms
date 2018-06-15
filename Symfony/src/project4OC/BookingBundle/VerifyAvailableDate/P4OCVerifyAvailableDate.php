@@ -21,7 +21,7 @@ class P4OCVerifyAvailableDate
 
 			if ($date < date('w/d/m/Y') OR $gauge >= 1000 OR $selectedDate[0] == 2 OR ($selectedDate[1] == 1 AND $selectedDate[2] == 05) OR ($selectedDate[1] == 1 AND $selectedDate[2] ==  11) OR ($selectedDate[1] == 25 AND $selectedDate[2] == 12) OR ($selectedDate == date('w/d/m/Y') AND $currentTime[1] > 18))
 			{
-				return $availableDate = false;
+				return $message = 'Cette date n\'est pas disponible à la réservation';
 			}
 			else
 			{
@@ -42,7 +42,7 @@ class P4OCVerifyAvailableDate
 
 		if ($selectedDateText == date('d/m/Y') AND $currentTime[1] > 12)
 		{
-			return $availableAllDay = false;
+			return $message = 'Il n\'est pas possible de réserver pour le jour même une fois 14 heures passées.';
 		}
 		else
 		{
@@ -64,11 +64,11 @@ class P4OCVerifyAvailableDate
 			else 
 			{	if ($numberAvailableTickets <= 1)
 				{
-					return $message = "Il reste seulement " . $numberAvailableTickets . " ticket disponible à la date choisie.";
+					return $message = "Vous souhaitez réserver " . $numberOfWhishedTickets . " tickets cependant il reste seulement " . $numberAvailableTickets . " ticket disponible à la date choisie.";
 				}
 				else
 				{
-					return $message = "Il reste seulement " . $numberAvailableTickets . " tickets disponibles à la date choisie.";
+					return $message = "Vous souhaitez réserver " . $numberOfWhishedTickets . " tickets cependant il reste seulement " . $numberAvailableTickets . " tickets disponibles à la date choisie.";
 				}	
 			}
 		}
@@ -87,7 +87,7 @@ class P4OCVerifyAvailableDate
 		}
 		else
 		{
-			return $typeOfTickets = "groupRate";
+			return $message = "Veuillez contacter l'équipe du musée du Louvre pour réserver au-delà de 14 personnes et/ou obtenir des informations sur le tarif groupe.";
 		}
 	}
 }
