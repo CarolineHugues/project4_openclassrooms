@@ -64,7 +64,8 @@ class FrontendController extends Controller
 								$session->set('booking', $booking);
 								$bookingManager = new BookingManager();
 								$totalPrice = $bookingManager->computeTotalPrice($booking);
-								return $this->render('project4OCBookingBundle:Frontend:purchase.html.twig', array('page_title' => 'Réservation en ligne', 'booking' => $booking,'totalPrice' => $totalPrice));
+
+								return $this->render('project4OCBookingBundle:Frontend:purchase.html.twig', array('page_title' => 'Réservation en ligne', 'booking' => $booking,'totalPrice' => $totalPrice,));
 							}
 						}
 						else
@@ -86,7 +87,8 @@ class FrontendController extends Controller
 			{
 				$message = $verifyAvailableDate->available($visitDay);
 			}
-			return $this->render('project4OCBookingBundle:Frontend:errorspages.html.twig', array('page_title' => 'Réservation en ligne', 'message' => $message));
+			$buttonText = "Modifier sa réservation";
+			return $this->render('project4OCBookingBundle:Frontend:errorspages.html.twig', array('page_title' => 'Réservation en ligne', 'message' => $message, 'buttonText' => $buttonText));
        	}
 
 		return $this->render('project4OCBookingBundle:Frontend:index.html.twig', array('page_title' => 'Réservation en ligne', 'form' => $form->createView(),));	
@@ -115,7 +117,6 @@ class FrontendController extends Controller
 
 	public function confirmationAction(Request $request)
 	{
-
 		\Stripe\Stripe::setApiKey("sk_test_SkklxJXLce11qiJtfABTlWar");
 
 		$token = $_POST['stripeToken'];
@@ -138,10 +139,20 @@ class FrontendController extends Controller
 		    'description' => 'Paiement de ' . $nbOfTickets . ' billet(s) pour le ' . $visitDayText . ' par ' . $customer,
 		    'source' => $token,
 		]);
+			
+			$booking = $em->merge($booking);
+			$em->persist($booking);
+			$em->flush();
 
-		$booking = $em->merge($booking);
-		$em->persist($booking);
-		$em->flush();
-    	return $this->render('project4OCBookingBundle:Frontend:confirmation.html.twig', array('page_title' => 'Réservation en ligne',));	
+			$message = \Swift_Message::newInstance()
+		  		->setFrom('contact@hc-projet1.ovh')
+		  		->setTo($booking->getMail())
+		  		->setSubject('Test - projet 4')
+		  		->setBody($this->container->get('templating')->render('project4OCBookingBundle:Email:tickets.html.twig', array('page_title' => 'Votre réservation au Musée du Louvre', 'booking' => $booking, 'totalPrice' => $totalPrice,)), 'text/html')
+			;
+	                  
+	        $this->get('mailer')->send($message);
+
+	    	return $this->render('project4OCBookingBundle:Frontend:confirmation.html.twig', array('page_title' => 'Réservation en ligne',));
 	}
 }
