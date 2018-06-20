@@ -139,7 +139,12 @@ class FrontendController extends Controller
 		    'description' => 'Paiement de ' . $nbOfTickets . ' billet(s) pour le ' . $visitDayText . ' par ' . $customer,
 		    'source' => $token,
 		]);
-			
+
+		$id = \Stripe\Charge::retrieve("$charge->id");
+		$status = $id->status;
+
+		if ($status == "succeeded")
+		{
 			$booking = $em->merge($booking);
 			$em->persist($booking);
 			$em->flush();
@@ -154,5 +159,12 @@ class FrontendController extends Controller
 	        $this->get('mailer')->send($message);
 
 	    	return $this->render('project4OCBookingBundle:Frontend:confirmation.html.twig', array('page_title' => 'Réservation en ligne',));
+	    }
+	    else
+	    {
+	    	$message = "Le paiement a échoué, votre réservation n'a pas pu être prise en compte.";
+	    	$buttonText = "Renouveler le paiement";
+	    	return $this->render('project4OCBookingBundle:Frontend:errorspages.html.twig', array('page_title' => 'Réservation en ligne', 'message' => $message, 'buttonText' => $buttonText));
+	    }	
 	}
 }
