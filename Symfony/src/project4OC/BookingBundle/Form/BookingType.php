@@ -20,10 +20,10 @@ class BookingType extends AbstractType
   {
     $builder 
       ->add('mail',            EmailType::class, array(
-        'label' => 'Veuillez saisir votre adresse mail pour pouvoir réserver :',
+        'label' => 'Veuillez renseigner votre adresse mail pour pouvoir réserver :',
       ))
       ->add('visitDay',   VisitDayType::class, array(
-        'label' => 'Veuillez choisir votre jour de visite :'
+        'label' => ' '
       ))
       ->add('ticketType',      ChoiceType::class, array(
         'label' => 'Type de billet',
