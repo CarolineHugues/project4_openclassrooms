@@ -1,0 +1,15 @@
+{# src/project4OC/BookingBundle/Resources/views/Email/tickets.html.twig #}
+
+{% extends "project4OCBookingBundle::layout.html.twig" %}
+
+{% block body %}
+	<p>Nous vous confirmons votre réservation de {{booking.numberOfTickets}} {% if booking.numberOfTickets > 1 %} billets {% else %} billet {% endif %} pour la visite du musée du Louvre le {{booking.visitDay.date|date('d/m/Y')}} pour :</p>
+	{% for ticket in booking.tickets %}
+		<ul>
+			<li>- {{ticket.name}} {{ticket.surname}}
+			</li>
+		</ul>
+	{% endfor %}
+	<p>Prix total : {{totalPrice}},00 euros</p>
+	<p>Code de réservation : {{booking.bookingCode}}</p>
+{% endblock %}
