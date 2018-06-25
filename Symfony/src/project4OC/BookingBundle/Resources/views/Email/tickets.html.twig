@@ -3,13 +3,15 @@
 {% extends "project4OCBookingBundle::layout.html.twig" %}
 
 {% block body %}
-	<p>Nous vous confirmons votre réservation de {{booking.numberOfTickets}} {% if booking.numberOfTickets > 1 %} billets {% else %} billet {% endif %} pour la visite du musée du Louvre le {{booking.visitDay.date|date('d/m/Y')}} pour :</p>
-	{% for ticket in booking.tickets %}
-		<ul>
-			<li>- {{ticket.name}} {{ticket.surname}}
-			</li>
-		</ul>
-	{% endfor %}
-	<p>Prix total : {{totalPrice}},00 euros</p>
-	<p>Code de réservation : {{booking.bookingCode}}</p>
+	<section id="mailBody">
+		<p>Nous vous confirmons votre réservation de <strong>{{booking.numberOfTickets}} {% if booking.numberOfTickets > 1 %} billets {% else %} billet {% endif %}</strong> pour la visite du <strong>musée du Louvre</strong> le <strong>{{booking.visitDay.date|date('d/m/Y')}}</strong> pour :</p>
+		{% for ticket in booking.tickets %}
+			<div>
+				<p>- {{ticket.name}} {{ticket.surname}} {% if ticket.reducedRate == 1 %} <strong>TARIF REDUIT</strong> (Ne pas oublier de venir avec sa carte justificative, il sera nécessaire de la présenter à l'entrée du musée.){% endif %}
+				</p>
+			</div>
+		{% endfor %}
+		<p><strong>Prix total : {{totalPrice}},00 euros</strong></p>
+		<p>Code de réservation : {{booking.bookingCode}}</p>
+	</section>
 {% endblock %}
