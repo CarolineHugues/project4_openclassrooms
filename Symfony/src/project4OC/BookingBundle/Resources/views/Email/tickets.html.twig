@@ -4,7 +4,7 @@
 
 {% block body %}
 	<section id="mailBody">
-		<p>Nous vous confirmons votre réservation de <strong>{{booking.numberOfTickets}} {% if booking.numberOfTickets > 1 %} billets {% else %} billet {% endif %}</strong> pour la visite du <strong>musée du Louvre</strong> le <strong>{{booking.visitDay.date|date('d/m/Y')}}</strong> pour :</p>
+		<p>Nous vous confirmons votre réservation de <strong>{{booking.numberOfTickets}} {% if booking.numberOfTickets > 1 %} billets {% else %} billet {% endif %}</strong> pour la visite du <strong>musée du Louvre</strong> le <strong>{{booking.visitDay.date|date('d/m/Y')}}</strong> {% if booking.ticketType == "day_ticketType" %} toute la <strong>journée</strong> {% else %} à partir de <strong>14h00</strong> {% endif %} pour :</p>
 		{% for ticket in booking.tickets %}
 			<div>
 				<p>- {{ticket.name}} {{ticket.surname}} {% if ticket.reducedRate == 1 %} <strong>TARIF REDUIT</strong> (Ne pas oublier de venir avec sa carte justificative, il sera nécessaire de la présenter à l'entrée du musée.){% endif %}
