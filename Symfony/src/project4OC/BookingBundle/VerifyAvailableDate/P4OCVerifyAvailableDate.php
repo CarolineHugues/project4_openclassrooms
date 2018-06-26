@@ -47,12 +47,13 @@ class P4OCVerifyAvailableDate
 		if ($visitDay != null)
 		{
 			$date = $visitDay->getDate();
-			$dateText = $date->format('w/d/m/y');
+			$dateText = $date->format('w/d/m/Y');
 			$gauge = $visitDay->getGauge();
 			$selectedDate = explode('/', $dateText);
 			$currentTime = explode('/', date('i/h'));
+			$currentDate = explode ('/', date('w/d/m/Y'));
 
-			if ($dateText < date('w/d/m/Y') OR $gauge >= 1000 OR $selectedDate[0] == 2 OR ($selectedDate[1] == 1 AND $selectedDate[2] == 05) OR ($selectedDate[1] == 1 AND $selectedDate[2] ==  11) OR ($selectedDate[1] == 25 AND $selectedDate[2] == 12) OR ($selectedDate == date('w/d/m/Y') AND $currentTime[1] > 18))
+			if ($selectedDate[3] < $currentDate[3] OR (($selectedDate[3] == $currentDate[3]) AND  ($selectedDate[2] < $currentDate[2])) OR (($selectedDate[3] == $currentDate[3]) AND  ($selectedDate[2] == $currentDate[2]) AND ($selectedDate[1] < $currentDate[1])) OR $gauge >= 1000 OR $selectedDate[0] == 2 OR ($selectedDate[1] == 1 AND $selectedDate[2] == 05) OR ($selectedDate[1] == 1 AND $selectedDate[2] ==  11) OR ($selectedDate[1] == 25 AND $selectedDate[2] == 12) OR ($selectedDate == date('w/d/m/Y') AND $currentTime[1] > 18))
 			{
 				return $message = 'Cette date n\'est pas disponible à la réservation';
 			}
