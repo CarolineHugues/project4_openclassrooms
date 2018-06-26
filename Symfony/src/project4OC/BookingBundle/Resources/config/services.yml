@@ -5,9 +5,12 @@ services:
 
     project4_oc_booking.formatdate:
         class: project4OC\BookingBundle\FormatDate\P4OCFormatDate
+        public: true
 
     project4_oc_booking.verifyavailabledate:
-        class: project4OC\BookingBundle\VerifyAvailableDate\P4OCVerifyAvailableDate   
+        class: project4OC\BookingBundle\VerifyAvailableDate\P4OCVerifyAvailableDate  
+        public: true 
 
     project4_oc_booking.stripe:
         class: project4OC\BookingBundle\Stripe\P4OCStripe  
+        public: true
