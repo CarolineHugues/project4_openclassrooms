@@ -38,59 +38,39 @@ class FrontendController extends Controller
 
 			$verifyAvailableDate = $this->container->get('project4_oc_booking.verifyavailabledate');
 
-			if ($verifyAvailableDate->available($visitDay) == true)
-			{	
-				if($verifyAvailableDate->availableAllDay($date) == true)
+			if ($verifyAvailableDate->verifyAvailableSelectedDate($date, $visitDay, $booking) == 'availableDate')
+			{
+			
+				if (null !== $visitDay)
 				{
-					if ($verifyAvailableDate->notEnoughTickets($visitDay, $booking) == false)
-					{
-						if($verifyAvailableDate->individualOrGroupRate($booking) == "individual")
-						{	
-							if (null !== $visitDay)
-							{
-								$booking->setVisitDay($visitDay);
-							}
-
-			    			$validator = $this->get('validator');
-							$listErrors = $validator->validate($booking);
-							if(count($listErrors) > 0) 
-							{
-								return new Response((string) $listErrors);
-							} 
-							else 
-							{
-			      				$em->detach($booking);
-								$session = $request->getSession();
-								$session->set('booking', $booking);
-								$bookingManager = new BookingManager();
-								$totalPrice = $bookingManager->computeTotalPrice($booking);
-
-								return $this->render('project4OCBookingBundle:Frontend:purchase.html.twig', array('page_title' => 'Réservation en ligne', 'booking' => $booking,'totalPrice' => $totalPrice,));
-							}
-						}
-						else
-						{
-							$message = $verifyAvailableDate->individualOrGroupRate($booking);
-						}
-					}
-					else
-					{
-						$message = $verifyAvailableDate->notEnoughTickets($visitDay, $booking);
-					}
+					$booking->setVisitDay($visitDay);
 				}
-				else
+
+			    $validator = $this->get('validator');
+				$listErrors = $validator->validate($booking);
+				if(count($listErrors) > 0) 
 				{
-					$message = $verifyAvailableDate->availableAllDay($date);
+					return new Response((string) $listErrors);
+				} 
+				else 
+				{
+			      	$em->detach($booking);
+					$session = $request->getSession();
+					$session->set('booking', $booking);
+					$bookingManager = new BookingManager();
+					$totalPrice = $bookingManager->computeTotalPrice($booking);
+
+					return $this->render('project4OCBookingBundle:Frontend:purchase.html.twig', array('page_title' => 'Réservation en ligne', 'booking' => $booking,'totalPrice' => $totalPrice,));
 				}
 			}
 			else
 			{
-				$message = $verifyAvailableDate->available($visitDay);
+				$message = $verifyAvailableDate->verifyAvailableSelectedDate($date, $visitDay, $booking);
+				$buttonText = "Modifier sa réservation";
+				return $this->render('project4OCBookingBundle:Frontend:errorspages.html.twig', array('page_title' => 'Réservation en ligne', 'message' => $message, 'buttonText' => $buttonText));
 			}
-			$buttonText = "Modifier sa réservation";
-			return $this->render('project4OCBookingBundle:Frontend:errorspages.html.twig', array('page_title' => 'Réservation en ligne', 'message' => $message, 'buttonText' => $buttonText));
        	}
-
+       	
 		return $this->render('project4OCBookingBundle:Frontend:index.html.twig', array('page_title' => 'Réservation en ligne', 'form' => $form->createView(),));	
 	}
 

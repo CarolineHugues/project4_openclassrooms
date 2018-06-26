@@ -9,6 +9,39 @@ use project4OC\BookingBundle\Entity\Booking;
 
 class P4OCVerifyAvailableDate
 {
+	public function verifyAvailableSelectedDate($date, $visitDay, Booking $booking)
+	{
+		if (SELF::available($visitDay) == true)
+		{	
+			if(SELF::availableAllDay($date) == true)
+			{
+				if (SELF::notEnoughTickets($visitDay, $booking) === false)
+				{
+					if(SELF::individualOrGroupRate($booking) == "individual")
+					{
+						return $message = 'availableDate';
+					}
+					else
+					{
+						return $message = SELF::individualOrGroupRate($booking);
+					}
+				}
+				else
+				{
+					return $message = SELF::notEnoughTickets($visitDay, $booking);
+				}
+			}
+			else
+			{
+				return $message = SELF::availableAllDay($date);
+			}
+		}
+		else
+		{
+			return $message = SELf::available($visitDay);
+		}
+	}
+
    public function available($visitDay)
 	{
 		if ($visitDay != null)
@@ -19,7 +52,7 @@ class P4OCVerifyAvailableDate
 			$selectedDate = explode('/', $dateText);
 			$currentTime = explode('/', date('i/h'));
 
-			if ($date < date('w/d/m/Y') OR $gauge >= 1000 OR $selectedDate[0] == 2 OR ($selectedDate[1] == 1 AND $selectedDate[2] == 05) OR ($selectedDate[1] == 1 AND $selectedDate[2] ==  11) OR ($selectedDate[1] == 25 AND $selectedDate[2] == 12) OR ($selectedDate == date('w/d/m/Y') AND $currentTime[1] > 18))
+			if ($dateText < date('w/d/m/Y') OR $gauge >= 1000 OR $selectedDate[0] == 2 OR ($selectedDate[1] == 1 AND $selectedDate[2] == 05) OR ($selectedDate[1] == 1 AND $selectedDate[2] ==  11) OR ($selectedDate[1] == 25 AND $selectedDate[2] == 12) OR ($selectedDate == date('w/d/m/Y') AND $currentTime[1] > 18))
 			{
 				return $message = 'Cette date n\'est pas disponible à la réservation';
 			}
