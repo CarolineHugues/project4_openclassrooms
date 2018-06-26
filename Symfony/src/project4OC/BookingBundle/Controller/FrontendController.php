@@ -70,7 +70,7 @@ class FrontendController extends Controller
 				return $this->render('project4OCBookingBundle:Frontend:errorspages.html.twig', array('page_title' => 'Réservation en ligne', 'message' => $message, 'buttonText' => $buttonText));
 			}
        	}
-       	
+
 		return $this->render('project4OCBookingBundle:Frontend:index.html.twig', array('page_title' => 'Réservation en ligne', 'form' => $form->createView(),));	
 	}
 
@@ -97,37 +97,26 @@ class FrontendController extends Controller
 
 	public function confirmationAction(Request $request)
 	{
-		\Stripe\Stripe::setApiKey("sk_test_SkklxJXLce11qiJtfABTlWar");
-
 		$token = $_POST['stripeToken'];
 
-		$em = $this->getDoctrine()->getManager();
-    	$session = $request->getSession();
-		$booking = $session->get('booking');
-		$bookingManager = new BookingManager();
-		$totalPrice = $bookingManager->computeTotalPrice($booking);
-		$totalPriceCents = $totalPrice . '00';
-		$customer = $booking->getMail();
-		$nbOfTickets = $booking->getNumberOfTickets();
-		$visitDay = $booking->getVisitDay()->getDate();
-		$visitDayText = $visitDay->format('d/m/Y');
+		$stripe = $this->container->get('project4_oc_booking.stripe');
 
-		$charge = \Stripe\Charge::create([
-		    'amount' => $totalPriceCents,
-		    'currency' => 'eur',
-		    'receipt_email' => $customer,
-		    'description' => 'Paiement de ' . $nbOfTickets . ' billet(s) pour le ' . $visitDayText . ' par ' . $customer,
-		    'source' => $token,
-		]);
+		$charge = $stripe->chargeStripe($request, $token);
 
-		$id = \Stripe\Charge::retrieve("$charge->id");
-		$status = $id->status;
+		$status = $stripe->getChargeStatus($charge);
 
 		if ($status == "succeeded")
 		{
+			$session = $request->getSession();
+			$booking = $session->get('booking');
+
+			$em = $this->getDoctrine()->getManager();
 			$booking = $em->merge($booking);
 			$em->persist($booking);
 			$em->flush();
+
+			$bookingManager = new BookingManager();
+			$totalPrice = $bookingManager->computeTotalPrice($booking);
 
 			$message = \Swift_Message::newInstance()
 		  		->setFrom('contact@hc-projet1.ovh')
