@@ -41,7 +41,8 @@ $( function() {
         return visitDaysDate[8] + visitDaysDate[9];
       }
     }
-
+    
+    // Gestion des jours où la jauge du musée est atteinte
     function isAvailable(date, i) {
       var visitDays = data;
       var visitDaysDate = visitDays[i].date.date;
@@ -85,7 +86,7 @@ $( function() {
 
 //Afficher les champs du formulaire au fur et à mesure
 	$('#booking_visitDay').parent().hide();
-  $("#booking_ticketType").parent().hide();
+  	$("#booking_ticketType").parent().hide();
 	$("#booking_numberOfTickets").parent().hide();
 	$("#booking_tickets").parent().hide();
 	$("#booking_save").parent().hide();
@@ -157,6 +158,9 @@ $( function() {
     if ((selectedDate == todayDate) && (today.getHours() >= 12))
     {
       $("#booking_ticketType .radio:nth-child(1)").hide();
+      $("#booking_ticketType_1").prop('checked', true) ;  
+      $('#booking_ticketType').after('<div><p>Le billet "Journée" n\'est plus réservable une fois midi passé.</p></div>');
+      $("#booking_numberOfTickets").parent().show();
     }
     else
     { 
