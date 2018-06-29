@@ -76,7 +76,7 @@ class P4OCVerifyAvailableDate
 
 		if ($selectedDateText == date('d/m/Y') AND $currentTime[1] > 12)
 		{
-			return $message = 'Il n\'est pas possible de réserver pour le jour même une fois 14 heures passées.';
+			return $message = 'Il n\'est pas possible de réserver le billet "Journée" pour le jour même une fois 12 heures passées.';
 		}
 		else
 		{

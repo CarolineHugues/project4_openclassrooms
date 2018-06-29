@@ -159,7 +159,7 @@ $( function() {
     {
       $("#booking_ticketType .radio:nth-child(1)").hide();
       $("#booking_ticketType_1").prop('checked', true) ;  
-      $('#booking_ticketType').after('<div><p>Le billet "Journée" n\'est plus réservable une fois midi passé.</p></div>');
+      $('#booking_ticketType').after('<div><p>Le billet "Journée" n\'est plus réservable une fois 12h00 passées.</p></div>');
       $("#booking_numberOfTickets").parent().show();
     }
     else
