@@ -136,7 +136,7 @@ $( function() {
     }
 	})
 
-//Afficher seulement "Billet demi-journée" si le jour même est sélectionné, une fois midi passé
+//Afficher seulement "Billet demi-journée" si le jour même est sélectionné, une fois 14 passées
   var today = new Date();
   function formatDate(date) {
     var d = new Date(date),
@@ -155,7 +155,7 @@ $( function() {
   $('#booking_visitDay').change(function() 
   {
     var selectedDate = $("#booking_visitDay_date").val();
-    if ((selectedDate == todayDate) && (today.getHours() >= 12))
+    if ((selectedDate == todayDate) && (today.getHours() >= 14))
     {
       $("#booking_ticketType .radio:nth-child(1)").hide();
       $("#booking_ticketType_1").prop('checked', true) ;  
