@@ -13,9 +13,17 @@
   		<script src="/Symfony/web/javascript/datepicker-fr.js"></script>
 	</head>
 	<body>
-		<p id="logo"><img src="{{ asset('images/logo-louvre.png') }}"></p>
-		<h1>{{ page_title }}</h1>
-		{% block body %}{% endblock %}
+		<header>
+			<p id="logo"><img src="{{ asset('images/logo-louvre.png') }}"></p>
+			<h1>{{ page_title }}</h1>
+		</header>
+		<section id="container">
+			{% block body %}{% endblock %}
+		</section>
+		<footer class="col-xs-12">
+			<p>© 2018 - HUGUES Caroline</p>
+			<p>Site fictif réalisé dans le cadre de la formation Chef de projet web - spécialité Développement d'OpenClassrooms</p>
+		</footer>
 		<script src="/Symfony/web/javascript/jq-style.js"></script>
 		<script src="https://js.stripe.com/v3/"></script>
 		<script src="/Symfony/web/javascript/stripe.js"></script>
