@@ -23,7 +23,6 @@ class Ticket extends Entity
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\Length(min=2)
      */
     private $name;
 
@@ -31,7 +30,6 @@ class Ticket extends Entity
      * @var string
      *
      * @ORM\Column(name="surname", type="string", length=255)
-     * @Assert\Length(min=2)
      */
     private $surname;
 
