@@ -14,8 +14,8 @@
 	</head>
 	<body>
 		<header>
-			<p id="logo"><img src="{{ asset('images/logo-louvre.png') }}"></p>
-			<h1>{{ page_title }}</h1>
+			<p id="logo" style="text-align: right;"><img src="{{ absolute_url(asset('images/logo-louvre.png')) }}"></p>
+			<h1 style="text-align: center;">{{ page_title }}</h1>
 		</header>
 		<section id="container">
 			{% block body %}{% endblock %}

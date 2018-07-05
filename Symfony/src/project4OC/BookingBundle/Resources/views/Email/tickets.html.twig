@@ -3,7 +3,7 @@
 {% extends "project4OCBookingBundle::layout.html.twig" %}
 
 {% block body %}
-	<section id="mailBody">
+	<section id="mailBody" style="width:670px;margin:auto;padding: 10px 10px 10px 10px;border:5px solid #5ba4a4;">
 		<p>Nous vous confirmons votre réservation de <strong>{{booking.numberOfTickets}} {% if booking.numberOfTickets > 1 %} billets {% else %} billet {% endif %}</strong> pour la visite du <strong>musée du Louvre</strong> le <strong>{{booking.visitDay.date|date('d/m/Y')}}</strong> {% if booking.ticketType == "day_ticketType" %} toute la <strong>journée</strong> {% else %} à partir de <strong>14h00</strong> {% endif %} pour :</p>
 		{% for ticket in booking.tickets %}
 			<div>
