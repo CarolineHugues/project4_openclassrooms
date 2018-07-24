@@ -54,6 +54,8 @@ class FrontendController extends Controller
 				} 
 				else 
 				{
+					$em->persist($booking);
+					$em->flush();
 			      	$em->detach($booking);
 					$session = $request->getSession();
 					$session->set('booking', $booking);
@@ -112,6 +114,14 @@ class FrontendController extends Controller
 
 			$em = $this->getDoctrine()->getManager();
 			$booking = $em->merge($booking);
+
+			$booking->setStatus('Paiement effectué');
+
+			$date =  $booking->getVisitDay();
+			$visitDay = $em->getRepository('project4OCBookingBundle:VisitDay')->find($date);
+			$booking->setVisitDay($visitDay);
+			$booking->fillNewGauge();
+			
 			$em->persist($booking);
 			$em->flush();
 

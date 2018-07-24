@@ -11,19 +11,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="booking")
  * @ORM\Entity(repositoryClass="project4OC\BookingBundle\Repository\BookingRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class Booking extends Entity
 {
-	/**
-	 * @ORM\OneToMany(targetEntity="project4OC\BookingBundle\Entity\Ticket", mappedBy="booking", cascade={"all"})
-	 */
-	private $tickets;
+    /**
+     * @ORM\OneToMany(targetEntity="project4OC\BookingBundle\Entity\Ticket", mappedBy="booking", cascade={"all"})
+     */
+    private $tickets;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\VisitDay", cascade={"persist"})
-	 */
-	private $visitDay;
+    /**
+     * @ORM\ManyToOne(targetEntity="project4OC\BookingBundle\Entity\VisitDay", cascade={"persist"})
+     */
+    private $visitDay;
 
     /**
      * @var string
@@ -56,42 +55,50 @@ class Booking extends Entity
      */
     private $bookingCode;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    private $status;
+
 
     public function __construct()
     {
-    	$this->bookingCode = uniqid();
+        $this->bookingCode = uniqid();
         $this->tickets = new ArrayCollection();
+        $this->status = "En attente de paiement";
     }
     
     public function addTicket(Ticket $ticket)
     {
-    	$this->tickets[] = $ticket;
+        $this->tickets[] = $ticket;
 
-    	$ticket->setBooking($this);
+        $ticket->setBooking($this);
 
-    	return $this;
+        return $this;
     }
 
     public function removeTicket(Ticket $ticket)
     {
-    	$this->tickets->removeElement($ticket);
+        $this->tickets->removeElement($ticket);
     }
 
     public function getTickets()
     {
-    	return $this->tickets;
+        return $this->tickets;
     }
 
     public function setVisitDay (VisitDay $visitDay)
     {
-    	$this->visitDay = $visitDay;
+        $this->visitDay = $visitDay;
 
-    	return $this;
+        return $this;
     }
 
     public function getVisitDay()
     {
-    	return $this->visitDay;
+        return $this->visitDay;
     }
 
     /**
@@ -143,7 +150,7 @@ class Booking extends Entity
     }
 
     /**
-     * Set mail
+     * Set numberOfTickets
      *
      * @param integer $numberOfTickets
      *
@@ -191,9 +198,29 @@ class Booking extends Entity
     }
 
     /**
-    *
-    *@ORM\PrePersist
-    */
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Booking
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
     public function fillNewGauge()
     {
         $numberReservedTickets = $this->getNumberOfTickets();
