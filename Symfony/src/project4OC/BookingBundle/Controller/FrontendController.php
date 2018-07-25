@@ -15,14 +15,17 @@ use project4OC\BookingBundle\Entity\Booking;
 use project4OC\BookingBundle\Entity\VisitDay;
 use project4OC\BookingBundle\Entity\Ticket;
 use project4OC\BookingBundle\Entity\Parameter;
-use project4OC\BookingBundle\Entity\VisitDayManager;
 use project4OC\BookingBundle\Entity\BookingManager;
 
 use project4OC\BookingBundle\Form\BookingType;
 
+use project4OC\BookingBundle\FormatDate\P4OCFormatDate;
+use project4OC\BookingBundle\VerifyAvailableDate\P4OCVerifyAvailableDate;
+use project4OC\BookingBundle\Stripe\P4OCStripe;
+
 class FrontendController extends Controller 
 {	
-	public function indexAction(Request $request)
+	public function indexAction(Request $request, P4OCFormatDate $p4OCFormatDate, P4OCVerifyAvailableDate $p4OCVerifyAvailableDate, BookingManager $bookingManager)
 	{
 		$booking = new Booking();
 
@@ -39,14 +42,11 @@ class FrontendController extends Controller
 
     	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) 
     	{
-			$formatDate = $this->container->get('project4_oc_booking.formatdate');
-			$date =  $formatDate->formatVisitDayDateToDb($booking);
+			$date =  $p4OCFormatDate->formatVisitDayDateToDb($booking);
 
 			$visitDay = $em->getRepository('project4OCBookingBundle:VisitDay')->findOneByDate($date);
 
-			$verifyAvailableDate = $this->container->get('project4_oc_booking.verifyavailabledate');
-
-			if ($verifyAvailableDate->verifyAvailableSelectedDate($date, $visitDay, $booking, $gauge) == 'availableDate')
+			if ($p4OCVerifyAvailableDate->verifyAvailableSelectedDate($date, $visitDay, $booking, $gauge) == 'availableDate')
 			{
 			
 				if (null !== $visitDay)
@@ -67,7 +67,7 @@ class FrontendController extends Controller
 			      	$em->detach($booking);
 					$session = $request->getSession();
 					$session->set('booking', $booking);
-					$bookingManager = new BookingManager();
+
 					$totalPrice = $bookingManager->computeTotalPrice($booking, $adultRate, $babyRate, $childRate, $reducedPrice, $seniorRate);
 
 					return $this->render('project4OCBookingBundle:Frontend:purchase.html.twig', array('page_title' => 'Réservation en ligne', 'booking' => $booking,'totalPrice' => $totalPrice,));
@@ -75,7 +75,7 @@ class FrontendController extends Controller
 			}
 			else
 			{
-				$message = $verifyAvailableDate->verifyAvailableSelectedDate($date, $visitDay, $booking);
+				$message = $p4OCVerifyAvailableDate->verifyAvailableSelectedDate($date, $visitDay, $booking);
 				$buttonText = "Modifier sa réservation";
 				return $this->render('project4OCBookingBundle:Frontend:errorspages.html.twig', array('page_title' => 'Réservation en ligne', 'message' => $message, 'buttonText' => $buttonText));
 			}
@@ -105,15 +105,13 @@ class FrontendController extends Controller
         return new JsonResponse($formatted);
 	}
 
-	public function confirmationAction(Request $request)
+	public function confirmationAction(Request $request, P4OCStripe $p4OCStripe, BookingManager $bookingManager)
 	{
 		$token = $_POST['stripeToken'];
 
-		$stripe = $this->container->get('project4_oc_booking.stripe');
+		$charge = $p4OCStripe->chargeStripe($request, $token);
 
-		$charge = $stripe->chargeStripe($request, $token);
-
-		$status = $stripe->getChargeStatus($charge);
+		$status = $p4OCStripe->getChargeStatus($charge);
 
 		if ($status == "succeeded")
 		{
@@ -133,8 +131,13 @@ class FrontendController extends Controller
 			$em->persist($booking);
 			$em->flush();
 
-			$bookingManager = new BookingManager();
-			$totalPrice = $bookingManager->computeTotalPrice($booking);
+			$adultRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('adultRate')->getValue();
+       		$babyRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('babyRate')->getValue();
+       		$childRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('childRate')->getValue();
+       		$reducedPrice = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('reducedRate')->getValue();
+       		$seniorRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('seniorRate')->getValue();
+
+			$totalPrice = $bookingManager->computeTotalPrice($booking, $adultRate, $babyRate, $childRate, $reducedPrice, $seniorRate);
 
 			$message = \Swift_Message::newInstance()
 		  		->setFrom('contact@hc-projet1.ovh')

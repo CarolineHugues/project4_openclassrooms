@@ -13,3 +13,20 @@ services:
         # this means you cannot fetch services directly from the container via $container->get()
         # if you need to do this, you can override this setting on individual services
         public: false
+
+    project4OC\BookingBundle\FormatDate\:
+        resource: '../../src/project4OC/BookingBundle/FormatDate/*'
+
+    project4OC\BookingBundle\VerifyAvailableDate\:
+        resource: '../../src/project4OC/BookingBundle/VerifyAvailableDate/*'
+
+    project4OC\BookingBundle\Stripe\:
+        resource: '../../src/project4OC/BookingBundle/Stripe/*'
+
+    project4OC\BookingBundle\Entity\:
+        resource: '../../src/project4OC/BookingBundle/Entity/*'
+
+    project4OC\BookingBundle\Controller\:
+        resource: '../../src/project4OC/BookingBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
