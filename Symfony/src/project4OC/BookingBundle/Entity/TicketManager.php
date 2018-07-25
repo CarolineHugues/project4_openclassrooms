@@ -22,31 +22,31 @@ class TicketManager
 		return $age;
 	}
 
-	public function computePrice($birthDate, $reducedRate)
+	public function computePrice($birthDate, $reducedRate, $adultRate, $babyRate, $childRate, $reducedPrice, $seniorRate)
 	{
 		$computedAge = SELF::computeAge($birthDate);
 
 		if ($reducedRate == true)
 		{
-			$price = 10;
+			$price = $reducedPrice;
 		}
 		else
 		{
 			if($computedAge >= 60)
 			{
-				$price = 12;
+				$price = $seniorRate;
 			}
 			else if($computedAge >= 12)
 			{
-				$price = 16;
+				$price = $adultRate;
 			}
 			else if($computedAge >= 4)
 			{
-				$price = 8;
+				$price = $childRate;
 			}
 			else if($computedAge > 0 AND $computedAge < 4)
 			{
-				$price = 0;
+				$price = $babyRate;
 			}
 			else if($computedAge <= 0)
 			{

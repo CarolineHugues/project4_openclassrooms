@@ -86,7 +86,7 @@ $( function() {
 
 //Afficher les champs du formulaire au fur et à mesure
 	$('#booking_visitDay').parent().hide();
-  	$("#booking_ticketType").parent().hide();
+  $("#booking_ticketType").parent().hide();
 	$("#booking_numberOfTickets").parent().hide();
 	$("#booking_tickets").parent().hide();
 	$("#booking_save").parent().hide();
@@ -136,7 +136,7 @@ $( function() {
     }
 	})
 
-//Afficher seulement "Billet demi-journée" si le jour même est sélectionné, une fois 14 passées
+//Afficher seulement "Billet demi-journée" si le jour même est sélectionné, une fois 14 heures passées
   var today = new Date();
   function formatDate(date) {
     var d = new Date(date),
@@ -246,31 +246,46 @@ $( function() {
   {
    var age = computeAge(i);
 
+   var adultRate = document.querySelector('#adultRate');
+   var adultRateValue = adultRate.dataset.adultRate;
+
+   var babyRate = document.querySelector('#babyRate');
+   var babyRateValue = babyRate.dataset.babyRate;
+
+   var childRate = document.querySelector('#childRate');
+   var childRateValue = childRate.dataset.childRate;
+
+   var reducedRate = document.querySelector('#reducedRate');
+   var reducedRateValue = reducedRate.dataset.reducedRate;
+
+   var seniorRate = document.querySelector('#seniorRate');
+   var seniorRateValue = seniorRate.dataset.seniorRate;
+
     if ($('#booking_tickets_'+ i +'_reducedRate').is(':checked'))
     {
-      var price = 10;
+      var price = reducedRateValue;
     }
     else
     {
       if(age >= 60)
       {
-        var price = 12;
+        var price = seniorRateValue;
       }
       else if(age >= 12)
       {
-        var price = 16;
+        var price = adultRateValue;
       }
       else if(age >= 4)
       {
-        var price = 8;
+        var price = childRateValue;
       }
       else if(age > 0 && age < 4)
       {
-        var price = 0;
+        var price = babyRateValue;
       }
     }
 
-    return price;
+    return Number(price);
   }
 
   function computeTotalPrice()

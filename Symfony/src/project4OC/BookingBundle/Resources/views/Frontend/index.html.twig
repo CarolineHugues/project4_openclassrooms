@@ -20,7 +20,7 @@
 			<h3 id="accordion-1">Jours d'ouverture</h3>
 			<div id="tab-1">
 				<p>Le musée est ouvert <strong>tous les jours sauf le mardi</strong> (et <strong>fermé les 1er mai, 1er novembre et 25 décembre</strong>).</p>
-				<p>Il n’est pas possible de réserver pour les jours passés, les mardis, les 1er mai, 1er novembre et 25 décembre. Certains jours peuvent également ne plus être disponibles à la vente, la jauge de 1000 billets (correspondant à la capacité du musée) ayant été atteinte.</p>
+				<p>Il n’est pas possible de réserver pour les jours passés, les mardis, les 1er mai, 1er novembre et 25 décembre. Certains jours peuvent également ne plus être disponibles à la vente, la jauge de {{gauge}} billets (correspondant à la capacité du musée) ayant été atteinte.</p>
 			</div>
 		
 			<h3 id="accordion-2">Types de billets</h3>
@@ -31,10 +31,10 @@
 		
 			<h3 id="accordion-3">Tarifs</h3>
 			<div id="tab-3">
-				<p>- <strong>Tarif normal</strong> à partir de 12 ans : 16 €</p>
-				<p>- <strong>Tarif enfant</strong> à partir de 4 ans et jusqu’à 12 ans : 8 € (l’entrée est gratuite pour les enfants âgés de moins de 4 ans).</p>
-				<p>- <strong>Tarif senior</strong> à partir de 60 ans : 12  €</p>
-				<p>- <strong>Tarif réduit</strong> : 10 €, accordé dans certaines conditions (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…). <strong>Ne pas oublier de venir avec sa carte justificative</strong>, il sera nécessaire de la présenter à l'entrée du musée.</p>
+				<p id="adultRate" data-adult-rate={{adultRate}}>- <strong>Tarif normal</strong> à partir de 12 ans : {{adultRate}} €</p>
+				<p id="childRate" data-child-rate={{childRate}}>- <strong>Tarif enfant</strong> à partir de 4 ans et jusqu’à 12 ans : {{childRate}} € </p> <p id="babyRate" data-baby-rate={{babyRate}}>(l’entrée est de {{babyRate}} € pour les enfants âgés de moins de 4 ans).</p>
+				<p id="seniorRate" data-senior-rate={{seniorRate}}>- <strong>Tarif senior</strong> à partir de 60 ans : {{seniorRate}} €</p>
+				<p id="reducedRate" data-reduced-rate={{reducedRate}}>- <strong>Tarif réduit</strong> : {{reducedRate}} €, accordé dans certaines conditions (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…). <strong>Ne pas oublier de venir avec sa carte justificative</strong>, il sera nécessaire de la présenter à l'entrée du musée.</p>
 			</div>
 	
 			<h3 id="accordion-4">Réception des billets</h3>

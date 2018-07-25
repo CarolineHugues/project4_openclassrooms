@@ -9,13 +9,13 @@ use project4OC\BookingBundle\Entity\Booking;
 
 class P4OCVerifyAvailableDate
 {
-	public function verifyAvailableSelectedDate($date, $visitDay, Booking $booking)
+	public function verifyAvailableSelectedDate($date, $visitDay, Booking $booking, $gauge)
 	{
-		if (SELF::available($visitDay) == true)
+		if (SELF::available($visitDay, $gauge) == true)
 		{	
 			if(SELF::availableAllDay($date) == true)
 			{
-				if (SELF::notEnoughTickets($visitDay, $booking) === false)
+				if (SELF::notEnoughTickets($visitDay, $booking, $gauge) === false)
 				{
 					if(SELF::individualOrGroupRate($booking) == "individual")
 					{
@@ -42,18 +42,18 @@ class P4OCVerifyAvailableDate
 		}
 	}
 
-   public function available($visitDay)
+   public function available($visitDay, $gauge)
 	{
 		if ($visitDay != null)
 		{
 			$date = $visitDay->getDate();
 			$dateText = $date->format('w/d/m/Y');
-			$gauge = $visitDay->getGauge();
+			$actualGauge = $visitDay->getGauge();
 			$selectedDate = explode('/', $dateText);
 			$currentTime = explode('/', date('i/h'));
 			$currentDate = explode ('/', date('w/d/m/Y'));
 
-			if ($selectedDate[3] < $currentDate[3] OR (($selectedDate[3] == $currentDate[3]) AND  ($selectedDate[2] < $currentDate[2])) OR (($selectedDate[3] == $currentDate[3]) AND  ($selectedDate[2] == $currentDate[2]) AND ($selectedDate[1] < $currentDate[1])) OR $gauge >= 1000 OR $selectedDate[0] == 2 OR ($selectedDate[1] == 1 AND $selectedDate[2] == 05) OR ($selectedDate[1] == 1 AND $selectedDate[2] ==  11) OR ($selectedDate[1] == 25 AND $selectedDate[2] == 12) OR ($selectedDate == date('w/d/m/Y') AND $currentTime[1] >= 18))
+			if ($selectedDate[3] < $currentDate[3] OR (($selectedDate[3] == $currentDate[3]) AND  ($selectedDate[2] < $currentDate[2])) OR (($selectedDate[3] == $currentDate[3]) AND  ($selectedDate[2] == $currentDate[2]) AND ($selectedDate[1] < $currentDate[1])) OR $actualGauge >= $gauge OR $selectedDate[0] == 2 OR ($selectedDate[1] == 1 AND $selectedDate[2] == 05) OR ($selectedDate[1] == 1 AND $selectedDate[2] ==  11) OR ($selectedDate[1] == 25 AND $selectedDate[2] == 12) OR ($selectedDate == date('w/d/m/Y') AND $currentTime[1] >= 18))
 			{
 				return $message = 'Cette date n\'est pas disponible à la réservation';
 			}
@@ -84,13 +84,13 @@ class P4OCVerifyAvailableDate
 		}
 	}
 
-	public function notEnoughTickets($visitDay, Booking $booking)
+	public function notEnoughTickets($visitDay, Booking $booking, $gauge)
 	{
 		if ($visitDay != null)
 		{
 			$numberOfWhishedTickets = $booking->getNumberOfTickets();
-			$gauge = $visitDay->getGauge();
-			$numberAvailableTickets = (1000 - $gauge);
+			$actualGauge = $visitDay->getGauge();
+			$numberAvailableTickets = ($gauge - $actualGauge);
 			if ($numberAvailableTickets > $numberOfWhishedTickets)
 			{
 				return $gaugeAlmostReached = false;

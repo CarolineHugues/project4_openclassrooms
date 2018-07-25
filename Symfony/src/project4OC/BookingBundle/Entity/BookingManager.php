@@ -17,7 +17,7 @@ class BookingManager
     	return $numberOfTickets;
     }
 	
-	public function computeTotalPrice(Booking $booking)
+	public function computeTotalPrice(Booking $booking, $adultRate, $babyRate, $childRate, $reducedPrice, $seniorRate)
 	{
 		$totalPrice = 0;
     	foreach($booking->getTickets() as $ticket)
@@ -25,7 +25,7 @@ class BookingManager
     		$ticketManager = new ticketManager();
     		$birthDate = $ticket->getBirthDate();
     		$reducedRate = $ticket->getReducedRate();
-      		$totalPrice += $ticketManager->computePrice($birthDate, $reducedRate);
+      		$totalPrice += $ticketManager->computePrice($birthDate, $reducedRate, $adultRate, $babyRate, $childRate, $reducedPrice, $seniorRate);
     	}
 
     	return $totalPrice;

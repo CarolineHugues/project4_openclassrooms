@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use project4OC\BookingBundle\Entity\Booking;
 use project4OC\BookingBundle\Entity\VisitDay;
 use project4OC\BookingBundle\Entity\Ticket;
+use project4OC\BookingBundle\Entity\Parameter;
 use project4OC\BookingBundle\Entity\VisitDayManager;
 use project4OC\BookingBundle\Entity\BookingManager;
 
@@ -29,6 +30,13 @@ class FrontendController extends Controller
 
     	$em = $this->getDoctrine()->getManager();
 
+    	$gauge = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('gauge')->getValue();
+       	$adultRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('adultRate')->getValue();
+       	$babyRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('babyRate')->getValue();
+       	$childRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('childRate')->getValue();
+       	$reducedPrice = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('reducedRate')->getValue();
+       	$seniorRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('seniorRate')->getValue();
+
     	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) 
     	{
 			$formatDate = $this->container->get('project4_oc_booking.formatdate');
@@ -38,7 +46,7 @@ class FrontendController extends Controller
 
 			$verifyAvailableDate = $this->container->get('project4_oc_booking.verifyavailabledate');
 
-			if ($verifyAvailableDate->verifyAvailableSelectedDate($date, $visitDay, $booking) == 'availableDate')
+			if ($verifyAvailableDate->verifyAvailableSelectedDate($date, $visitDay, $booking, $gauge) == 'availableDate')
 			{
 			
 				if (null !== $visitDay)
@@ -60,7 +68,7 @@ class FrontendController extends Controller
 					$session = $request->getSession();
 					$session->set('booking', $booking);
 					$bookingManager = new BookingManager();
-					$totalPrice = $bookingManager->computeTotalPrice($booking);
+					$totalPrice = $bookingManager->computeTotalPrice($booking, $adultRate, $babyRate, $childRate, $reducedPrice, $seniorRate);
 
 					return $this->render('project4OCBookingBundle:Frontend:purchase.html.twig', array('page_title' => 'Réservation en ligne', 'booking' => $booking,'totalPrice' => $totalPrice,));
 				}
@@ -73,7 +81,7 @@ class FrontendController extends Controller
 			}
        	}
 
-		return $this->render('project4OCBookingBundle:Frontend:index.html.twig', array('page_title' => 'Réservation en ligne', 'form' => $form->createView(),));	
+		return $this->render('project4OCBookingBundle:Frontend:index.html.twig', array('page_title' => 'Réservation en ligne', 'form' => $form->createView(), 'gauge' => $gauge, 'adultRate' => $adultRate, 'babyRate' => $babyRate, 'childRate' => $childRate, 'reducedRate' => $reducedPrice, 'seniorRate' => $seniorRate,));	
 	}
 
 	/**
@@ -82,7 +90,7 @@ class FrontendController extends Controller
 	public function getListVisitDayAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-		$gauge = 1000;
+		$gauge = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('gauge')->getValue();
         $visitDays = $em->getRepository('project4OCBookingBundle:VisitDay')->findByGauge($gauge);
 
         $formatted = [];
