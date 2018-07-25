@@ -6,10 +6,11 @@ use project4OC\BookingBundle\Entity\Booking;
 use project4OC\BookingBundle\Entity\BookingManager;
 use project4OC\BookingBundle\Entity\Ticket;
 use project4OC\BookingBundle\Entity\VisitDay;
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class BookingManagerTest extends TestCase
+class BookingManagerTest extends WebTestCase
 {
+
 	public function testComputeNumberOfTickets()
 	{
 		$ticket1 = new Ticket();
@@ -42,7 +43,18 @@ class BookingManagerTest extends TestCase
 
 		$bookingManager = new BookingManager();
 
-        $this->assertSame(20, $bookingManager->computeTotalPrice($booking1));
+		$kernel = static::createKernel();
+ 		$kernel->boot();
+ 		$container = $kernel->getContainer();
+ 		$em = $container->get('doctrine.orm.entity_manager');
+
+    	$adultRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('adultRate')->getValue();
+       	$babyRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('babyRate')->getValue();
+       	$childRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('childRate')->getValue();
+       	$reducedPrice = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('reducedRate')->getValue();
+       	$seniorRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('seniorRate')->getValue();
+
+        $this->assertSame(20, $bookingManager->computeTotalPrice($booking1, $adultRate, $babyRate, $childRate, $reducedPrice, $seniorRate));
 	}
 
 	public function testHalfdayRate()
@@ -57,6 +69,17 @@ class BookingManagerTest extends TestCase
 
 		$bookingManager = new BookingManager();
 
-        $this->assertSame(12, $bookingManager->computeTotalPrice($booking1));
+		$kernel = static::createKernel();
+ 		$kernel->boot();
+ 		$container = $kernel->getContainer();
+ 		$em = $container->get('doctrine.orm.entity_manager');
+
+    	$adultRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('adultRate')->getValue();
+       	$babyRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('babyRate')->getValue();
+       	$childRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('childRate')->getValue();
+       	$reducedPrice = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('reducedRate')->getValue();
+       	$seniorRate = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('seniorRate')->getValue();
+
+        $this->assertSame(12, $bookingManager->computeTotalPrice($booking1, $adultRate, $babyRate, $childRate, $reducedPrice, $seniorRate));
 	}
 }

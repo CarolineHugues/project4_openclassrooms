@@ -23,10 +23,14 @@ class P4OCVerifyAvailableDateServiceTest extends WebTestCase
  		$kernel->boot();
  
  		$container = $kernel->getContainer();
+
+ 		$em = $container->get('doctrine.orm.entity_manager');
+
+    	$gauge = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('gauge')->getValue();
  
  		$service = $container->get('project4_oc_booking.verifyavailabledate');
 
- 		$result = $service->available($visitDay);
+ 		$result = $service->available($visitDay, $gauge);
 
  		$this->assertEquals(true, $result);
 	}
@@ -42,10 +46,14 @@ class P4OCVerifyAvailableDateServiceTest extends WebTestCase
  		$kernel->boot();
  
  		$container = $kernel->getContainer();
+
+ 		$em = $container->get('doctrine.orm.entity_manager');
+
+    	$gauge = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('gauge')->getValue();
  
  		$service = $container->get('project4_oc_booking.verifyavailabledate');
 
- 		$result = $service->available($visitDay);
+ 		$result = $service->available($visitDay, $gauge);
 
  		$this->assertEquals('Cette date n\'est pas disponible à la réservation', $result);
 	}
@@ -61,10 +69,14 @@ class P4OCVerifyAvailableDateServiceTest extends WebTestCase
  		$kernel->boot();
  
  		$container = $kernel->getContainer();
+
+ 		$em = $container->get('doctrine.orm.entity_manager');
+
+    	$gauge = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('gauge')->getValue();
  
  		$service = $container->get('project4_oc_booking.verifyavailabledate');
 
- 		$result = $service->available($visitDay);
+ 		$result = $service->available($visitDay, $gauge);
 
  		$this->assertEquals('Cette date n\'est pas disponible à la réservation', $result);
 	}
@@ -80,10 +92,14 @@ class P4OCVerifyAvailableDateServiceTest extends WebTestCase
  		$kernel->boot();
  
  		$container = $kernel->getContainer();
+
+ 		$em = $container->get('doctrine.orm.entity_manager');
+
+    	$gauge = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('gauge')->getValue();
  
  		$service = $container->get('project4_oc_booking.verifyavailabledate');
 
- 		$result = $service->notEnoughTickets($visitDay, $booking);
+ 		$result = $service->notEnoughTickets($visitDay, $booking, $gauge);
 
  		$this->assertEquals('Vous souhaitez réserver 4 tickets cependant il reste seulement 2 tickets disponibles à la date choisie.', $result);
 	}
@@ -99,10 +115,14 @@ class P4OCVerifyAvailableDateServiceTest extends WebTestCase
  		$kernel->boot();
  
  		$container = $kernel->getContainer();
+
+ 		$em = $container->get('doctrine.orm.entity_manager');
+
+    	$gauge = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('gauge')->getValue();
  
  		$service = $container->get('project4_oc_booking.verifyavailabledate');
 
- 		$result = $service->notEnoughTickets($visitDay, $booking);
+ 		$result = $service->notEnoughTickets($visitDay, $booking, $gauge);
 
  		$this->assertEquals(false, $result);
 	}
@@ -141,7 +161,7 @@ class P4OCVerifyAvailableDateServiceTest extends WebTestCase
  		$this->assertEquals("individual", $result);
 	}
 
-	public function testVerifyAvailableSelectedDate()
+		public function testVerifyAvailableSelectedDate()
 	{
 		$booking = new booking();
 		$booking->setNumberOfTickets('8');
@@ -154,10 +174,14 @@ class P4OCVerifyAvailableDateServiceTest extends WebTestCase
  		$kernel->boot();
  
  		$container = $kernel->getContainer();
+
+ 		$em = $container->get('doctrine.orm.entity_manager');
+
+    	$gauge = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('gauge')->getValue();
  
  		$service = $container->get('project4_oc_booking.verifyavailabledate');
 
- 		$result = $service->verifyAvailableSelectedDate($date, $visitDay, $booking);
+ 		$result = $service->verifyAvailableSelectedDate($date, $visitDay, $booking, $gauge);
 
  		$this->assertEquals("availableDate", $result);
 	}
@@ -175,10 +199,14 @@ class P4OCVerifyAvailableDateServiceTest extends WebTestCase
  		$kernel->boot();
  
  		$container = $kernel->getContainer();
+
+ 		$em = $container->get('doctrine.orm.entity_manager');
+
+    	$gauge = $em->getRepository('project4OCBookingBundle:Parameter')->findOneByName('gauge')->getValue();
  
  		$service = $container->get('project4_oc_booking.verifyavailabledate');
 
- 		$result = $service->verifyAvailableSelectedDate($date, $visitDay, $booking);
+ 		$result = $service->verifyAvailableSelectedDate($date, $visitDay, $booking, $gauge);
 
  		$this->assertEquals("Veuillez contacter l'équipe du musée du Louvre pour réserver au-delà de 14 personnes et/ou obtenir des informations sur le tarif groupe.", $result);
 	}
